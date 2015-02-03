@@ -6,10 +6,10 @@ Tikr is an application that blends the best of GitHub with the best of Linked in
 
 ## Development Team
 
-* Scott Rice - [scottrice10](https://github.com/scottrice10)
-* Tim Martin - [tmartin1](https://github.com/tmartin1)
-* Kevin Primat - [kxprim](https://github.com/kxprim)
-* Yan Fan - [yanarchy](https://github.com/yanarchy)
+* Project Owner [Tim Martin](https://github.com/tmartin1)
+* Scrum Master [Scott Rice](https://github.com/scottrice10)
+* Build Master [Kevin Primat](https://github.com/kxprim)
+* UX Lead [Yan Fan](https://github.com/yanarchy)
 
 ## Table of Contents
 
