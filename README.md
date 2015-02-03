@@ -1,13 +1,15 @@
 # Tikr
 
+[![Stories in Ready](https://badge.waffle.io/FatalBadgers/tikr.svg?label=ready&title=Ready)](http://waffle.io/FatalBadgers/tikr)
+
 Tikr is an application that blends the best of GitHub with the best of Linked in. This is a expansion of a project initially concieved by Mike Staub, Bryan Venable, Travis Chapman, and Richard VanBreemen. You can find the original repo on GitHub [here](https://github.com/tikr/tikr).
 
 ## Development Team
 
-* Scott Rice - [scottrice10](https://github.com/scottrice10)
-* Tim Martin - [tmartin1](https://github.com/tmartin1)
-* Kevin Primat - [kxprim](https://github.com/kxprim)
-* Yan Fan - [yanarchy](https://github.com/yanarchy)
+* Project Owner [Tim Martin](https://github.com/tmartin1)
+* Scrum Master [Scott Rice](https://github.com/scottrice10)
+* Build Master [Kevin Primat](https://github.com/kxprim)
+* UX Lead [Yan Fan](https://github.com/yanarchy)
 
 ## Table of Contents
 
