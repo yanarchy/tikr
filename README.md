@@ -1,6 +1,6 @@
 # Project Name
 
-> This is a expansion of a project initially concieved by Mike Staub, Bryan Venable, Travis Chapman, and Richard VanBreemen. You can find the original repo on GitHub [here](https://github.com/tikr/tikr).
+Tikr is an application that blends the best of GitHub with the best of Linked in. This is a expansion of a project initially concieved by Mike Staub, Bryan Venable, Travis Chapman, and Richard VanBreemen. You can find the original repo on GitHub [here](https://github.com/tikr/tikr).
 
 ## Development Team
 
@@ -21,7 +21,11 @@
 
 ## Usage
 
-> Some usage instructions
+```sh
+grunt serve
+```
+
+Browser window will open at localhost:9000 with the app.
 
 ## Requirements
 
