@@ -1,4 +1,4 @@
-# Project Name
+# Tikr
 
 Tikr is an application that blends the best of GitHub with the best of Linked in. This is a expansion of a project initially concieved by Mike Staub, Bryan Venable, Travis Chapman, and Richard VanBreemen. You can find the original repo on GitHub [here](https://github.com/tikr/tikr).
 
