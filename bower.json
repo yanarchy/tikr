@@ -15,7 +15,8 @@
     "lodash": "~2.4.1",
     "angular-ui-router": "~0.2.10",
     "c3": "~0.4.9",
-    "angular-ui-select": "*"
+    "angular-ui-select": "*",
+    "angular-utils-pagination": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

@@ -36,7 +36,8 @@
       <div class="row-fluid main-section" style="min-height:500px" ng-if="users.length > 0 && searchStarted">
         <div ng-bind="(data.total_count ? (data.total_count | number) : 0) + ' results found'"></div>
 
-        <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+        <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'"
+             dir-paginate="user in users | itemsPerPage: 10 track by $index" total-items="(data.total_count || 0)">
 
           <div class="container">
             <a href="{{user.html_url}}" target="_blank">
@@ -67,6 +68,11 @@
           </div>
 
         </div>
+
+        <dir-pagination-controls on-page-change="fetchUsers(selected, newPageNumber)"
+                                 template-url="components/pagination/dirPagination.tpl.html">
+        </dir-pagination-controls>
+
       </div>
 
     </div>
