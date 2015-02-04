@@ -98,13 +98,6 @@ exports.search = function(req, res, next) {
     }
   };
 
-  // return users who have all of the specified skills
-  if (req.body.hasAllSkills && req.body.skill) {
-    //nothing now
-  } else if (req.body.skill) { // return users who have at least one of the skills
-    //nothing now
-  }
-
   request(options, function(error, response, body) {
     if (!error) {
       res.send([JSON.parse(decodeURIComponent(response.body))]);
