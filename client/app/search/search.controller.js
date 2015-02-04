@@ -8,7 +8,6 @@ angular.module('tikrApp')
 
     // returns a promise
     $scope.fetchUsers = function() {
-
       User.search({
         skill: $scope.skill
       }, function(data) {
