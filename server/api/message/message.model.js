@@ -12,7 +12,10 @@ var MessageSchema = new Schema({
     type: Number,
     required: true
   },
-  title: String,
+  title: {
+    type: String,
+    required: true
+  },
   content: {
     type: String,
     required: true
