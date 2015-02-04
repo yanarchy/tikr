@@ -24,7 +24,8 @@ angular.module('tikrApp')
         params: {
           id: 'me',
           controller: 'search',
-          skill: null
+          skill: null,
+          username: null
         }
       }
 	  });
