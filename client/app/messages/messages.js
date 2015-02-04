@@ -23,6 +23,14 @@ angular.module('tikrApp')
       .state('messages.compose', {
         url: '/compose',
         templateUrl: 'app/messages/views/compose.html'
+      })
+      .state('messages.sent', {
+        url: '/sent',
+        templateUrl: 'app/messages/views/sent.html'
+      })
+      .state('messages.starred', {
+        url: '/starred',
+        templateUrl: 'app/messages/views/starred.html'
       });
 
   });
