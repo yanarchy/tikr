@@ -37,6 +37,13 @@ angular.module('tikrApp')
       });
     };
 
+    // Fetches list of message objects of messages that were sent by the user.
+    $scope.getSent = function() {
+      messageService.sent().then(function(messages) {
+        $scope.sentMessages = messages;
+      });
+    }
+
     // Fetches a specific message.
     $scope.show = function(message) {
       messageService.update(message, {
