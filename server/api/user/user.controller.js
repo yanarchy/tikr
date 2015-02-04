@@ -3,10 +3,16 @@
 var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
-var githubKeys = require('../../config/local.env.js');
 var jwt = require('jsonwebtoken');
 var request = require('request');
 var Promise = require('bluebird');
+var githubKeys;
+
+try {
+  githubKeys = require('../../config/local.env.js');
+} catch(e) {
+  //do nothing
+}
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -92,7 +98,8 @@ exports.changePassword = function(req, res, next) {
 var getReposPromise = function(user, username) {
   return new Promise(function(resolve, reject) {
     var repoOptions = {
-      url: user.repos_url + "?client_id=" + githubKeys.GITHUB_ID + "&client_secret=" + githubKeys.GITHUB_SECRET + "&page=1&per_page=3",
+      url: user.repos_url + "?client_id=" + (process.env.GITHUB_ID || githubKeys.GITHUB_ID)
+      + "&client_secret=" + (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET) + "&page=1&per_page=3",
       headers: {
         'User-Agent': username
       }
