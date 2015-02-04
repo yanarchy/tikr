@@ -14,6 +14,6 @@ var router = express.Router();
 
 router.use('/local', require('./local'));
 router.use('/github', require('./github'));
-router.use('/linkedin', require('/linkedin'));
+router.use('/linkedin', require('./linkedin'));
 
 module.exports = router;

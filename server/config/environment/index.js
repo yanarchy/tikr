@@ -44,13 +44,13 @@ var all = {
   github: {
     clientID: process.env.GITHUB_ID || 'id',
     clientSecret: process.env.GITHUB_SECRET || 'secret',
-    callbackURL: (process.env.DOMAIN || '') + '/auth/github/callback'
+    callbackURL: (process.env.GITHUB_DOMAIN || '') + '/auth/github/callback'
   },
 
   linkedin: {
     clientID: process.env.LINKEDIN_ID || 'id',
     clientSecret: process.env.LINKEDIN_SECRET || 'secret',
-    callbackURL: (process.env.DOMAIN || '') + '/auth/linkedin/callback'
+    callbackURL: (process.env.LINKEDIN_DOMAIN || '') + '/auth/linkedin/callback'
 
   }
 
