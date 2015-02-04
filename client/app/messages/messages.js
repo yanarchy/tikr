@@ -13,7 +13,6 @@ angular.module('tikrApp')
       })
       .state('messages.inbox', {
         url: '/inbox',
-        // controller: 'MessageCtrl',
         templateUrl: 'app/messages/views/inbox.html'
       })
       .state('messages.message', {

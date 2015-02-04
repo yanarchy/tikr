@@ -19,6 +19,20 @@ angular.module('tikrApp')
         return deffered.promise;
       },
 
+      // Get messages that the user sent.
+      sent: function() {
+        var deffered = $q.defer();
+        $http.get('/api/messages/sent')
+          .success(function(data) {
+            deffered.resolve(data);
+          })
+          .error(function(data) {
+            deffered.reject(data);
+          });
+
+        return deffered.promise;
+      },
+
       // Updates the properties on the message.
       update: function(message, property) {
         var deffered = $q.defer();

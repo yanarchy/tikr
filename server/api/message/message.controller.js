@@ -86,3 +86,23 @@ exports.inbox = function(req, res, next) {
     });
   });
 };
+
+
+/**
+ * Get all messages that a user has sent
+ */
+exports.sent = function(req, res, next) {
+  User.findOne({
+    _id: req.user._id
+  }, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.status(401).json();
+    Message.find({
+      from: req.user.github.id
+    }, function(err, messages) {
+      if (err) return next(err);
+      if (!messages) return res.status(401).json();
+      res.json(messages);
+    });
+  });
+};
