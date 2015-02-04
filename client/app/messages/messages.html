@@ -12,15 +12,16 @@
     <!-- Side nav bar -->
     <div class="col-md-2">
 
-      <button id="inbox-back" type="button" class="btn btn-default btn-md" ui-sref="inbox.messages.create">
+      <button id="inbox-back" type="button" class="btn btn-default btn-md" ui-sref="messages.compose">
         <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Compose
       </button>
-      <div ui-view="sidebar"></div>
+      <div ng-include="'app/messages/components/sidebar.html'"></div>
     </div>
 
-    <!-- Main content view -->
+    <!-- Main content -->
     <div class="col-md-10">
-      <div ui-view="messages"></div>
+      <div ui-view></div>
     </div>
+
   </div>
 </div>

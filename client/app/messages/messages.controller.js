@@ -36,13 +36,13 @@ angular.module('tikrApp')
     $scope.create = function(newMessage) {
       messageService.create(newMessage).then(function(doc) {
         $scope.messages.push(doc);
-        $state.transitionTo('inbox.messages');
+        $state.transitionTo('messages.inbox');
       }, function() {
-        $state.transitionTo('inbox.messages.create');
+        $state.transitionTo('messages.compose');
       });
     };
 
     $scope.inbox();
-    $state.transitionTo('inbox.messages');
+    $state.transitionTo('messages.inbox');
 
   }]);

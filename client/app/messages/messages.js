@@ -5,26 +5,22 @@ angular.module('tikrApp')
     $urlRouterProvider.when('/messages', '/messages/inbox');
 
     $stateProvider
-      .state('inbox', {
-        url: '/messages/inbox',
+      .state('messages', {
+        url: '/messages',
         controller: 'MessageCtrl',
-        templateUrl: 'app/messages/messages.html'
+        templateUrl: 'app/messages/messages.html',
+        abstract: true
       })
-      .state('inbox.messages', {
-        views: {
-          'sidebar': {
-            templateUrl: 'app/messages/components/sidebar.html'
-          },
-          'messages': {
-            templateUrl: 'app/messages/views/inbox.html'
-          }
-        }
+      .state('messages.inbox', {
+        url: '/inbox',
+        // controller: 'MessageCtrl',
+        templateUrl: 'app/messages/views/inbox.html'
       })
-      .state('inbox.messages.show', {
+      .state('messages.message', {
         url: '/:id',
         templateUrl: 'app/messages/views/message.html'
       })
-      .state('inbox.messages.create', {
+      .state('messages.compose', {
         url: '/compose',
         templateUrl: 'app/messages/views/compose.html'
       });
