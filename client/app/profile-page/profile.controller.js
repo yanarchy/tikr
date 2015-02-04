@@ -123,19 +123,46 @@ angular.module('tikrApp')
 
     $scope.setupChart = function(){
       var data = [];
-      _.each($scope.languages, function(val, key){
-        data.push([key, val[1], 'test']);
+      var langLegend = []
+      
+      // $scope.languages retrieves languages mostly used by person on GitHub
+      _.each($scope.languages, function(percentage, lang){
+        console.log('Value', percentage[1]);
+        console.log('Key', lang);
+
+        langLegend.push(lang);
+        data.push([lang, percentage[1], 'test']);
       });
 
       var chart = c3.generate({
         data: {
+
+          // Example:
+          // columns: [
+          //   ['data1',40, 30, 200, 100, 400, 150, 250, 50, 100, 250,67,190,48,123,76,54,254],
+          //   ['x','Travel and Hospitality','Life Science and Pharma', 'Saas and Cloud', 'Hi-tech Manufacturing', 'Software', 'Business Services', 'Govt/Public Sector', 'Energy', 'Manufacturing', 'Healthcare','Media','Internet','Retail','Biotech','Automobile','Consumer Goods','Financial Services']
+          // ],
+
           columns: data,
-            type : 'donut',
-            onclick: function (d, i) { console.log("onclick", d, i); },
-            onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-            onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            type : 'bar',
+            onclick: function (d, i) { console.log("onclick", Math.floor(d.value), i); },
+            // onmouseover: function (d, i) { console.log("onmouseover", Math.floor(d.value), i); },
+            // onmouseout: function (d, i) { console.log("onmouseout", d, i); }
         },
-        donut: {
+        axis: {
+          rotated: true,
+          x: {
+            max: 0,
+            min: 0,
+            type: 'category',
+            tick:{
+              multiline: false
+            }
+          }
+        },
+        bar: {
+          width: 20,
+          zerobased: true,
           title: "Languages"
         }
       });
