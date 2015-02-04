@@ -99,38 +99,13 @@ exports.search = function(req, res, next) {
   };
 
   // return users who have all of the specified skills
-<<<<<<< HEAD
-  if (req.body.hasAllSkills) {
-    User.find({
-        'skills': {
-          $all: req.body.skills
-        }
-      }, '-salt -hashedPassword',
-      function(err, users) {
-        if (err) return next(err);
-        if (!users) return res.json(401);
-        res.json(users);
-      });
-  } else { // return users who have at least one of the skills
-    User.find({
-        'skills': {
-          $in: req.body.skills
-        }
-      }, '-salt -hashedPassword',
-      function(err, users) {
-        if (err) return next(err);
-        if (!users) return res.json(401);
-        res.json(users);
-      });
-=======
-  if(req.body.hasAllSkills && req.body.skill){
+  if (req.body.hasAllSkills && req.body.skill) {
     //nothing now
-  } else if(req.body.skill) { // return users who have at least one of the skills
+  } else if (req.body.skill) { // return users who have at least one of the skills
     //nothing now
->>>>>>> 126711ac677d07430659d9c192d77e0a22a04415
   }
 
-  request(options , function (error, response, body) {
+  request(options, function(error, response, body) {
     if (!error) {
       res.send([JSON.parse(decodeURIComponent(response.body))]);
     } else {
