@@ -32,8 +32,14 @@ exports.create = function(req, res, next) {
   newUser.role = 'user';
   newUser.save(function(err, user) {
     if(err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id}, config.secrets.session, {expiresInMinutes: 60 * 5});
-    res.json({token: token});
+    var token = jwt.sign({
+      _id: user._id
+    }, config.secrets.session, {
+      expiresInMinutes: 60 * 5
+    });
+    res.json({
+      token: token
+    });
   });
 };
 
@@ -86,7 +92,7 @@ exports.changePassword = function(req, res, next) {
 var getReposPromise = function(user, username) {
   return new Promise(function(resolve, reject) {
     var repoOptions = {
-      url: user.repos_url + "?client_id=" + githubKeys.GITHUB_ID + "&client_secret=" + githubKeys.GITHUB_SECRET  + "&page=1&per_page=3",
+      url: user.repos_url + "?client_id=" + githubKeys.GITHUB_ID + "&client_secret=" + githubKeys.GITHUB_SECRET + "&page=1&per_page=3",
       headers: {
         'User-Agent': username
       }
@@ -132,17 +138,17 @@ exports.search = function(req, res, next) {
   };
 
   request(options, function(error, response, body) {
+
     if(!error) {
       var users = JSON.parse(decodeURIComponent(response.body));
 
       getUsersPromise(users, req.body.username)
-        .then(function(users) {
+        .then(function() {
           res.send([changedUsers]);
         })
         .catch(function(error) {
           console.log('error getting users', error);
         });
-
     } else {
       console.log(error);
       res.send(500);
@@ -173,7 +179,9 @@ exports.authCallback = function(req, res, next) {
 
 exports.getUserProfile = function(req, res, next) {
 
-  User.findOne({'github.login': req.params.githubUsername},
+  User.findOne({
+      'github.login': req.params.githubUsername
+    },
     '-salt -hashedPassword',
     function(err, user) {
       if(err) {
@@ -202,4 +210,5 @@ exports.postNewSkill = function(req, res, next) {
       }
     }
   );
-};
+}
+;
