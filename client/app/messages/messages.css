@@ -5,3 +5,40 @@
 #inbox-back {
   margin-bottom: 20px;
 }
+
+.side-margin-20 {
+  margin: auto 20px;
+}
+
+.inbox-display tr {
+  cursor: pointer;
+}
+
+.inbox-from {
+  width: 10%;
+  min-width: 100px;
+  max-width: 150px;
+}
+
+.inbox-flags {
+  width: 10%;
+  min-width: 50px;
+  max-width: 150px;
+}
+
+.inbox-subject {
+  width: 15%;
+  min-width: 100px;
+  max-width: 150px;
+}
+
+.inbox-preview {
+  width: 65%;
+  min-width: 200px;
+}
+
+.hide-extra {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}

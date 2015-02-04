@@ -1,40 +1,46 @@
-<div
-  ng-repeat="message in messages"
-  ng-hide="$state.includes('messages.message') || $state.includes('messages.compose')">
-  
+<div class="row side-margin-20">
+  <h1>Inbox</h1>
+  <br>
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        <a
-          ui-sref="messages.message({id: message._id})"
-          ng-click="show(message)">
+    <table class="table table-striped">
+      <tr>
+        <th class="inbox-from">From</th>
+        <th class="inbox-flags">Flags</th>
+        <th class="inbox-subject">Subject</th>
+        <th class="inbox-preview">Message</th>
+      </tr>
+      <tr ng-repeat="message in messages">
+        <td class="inbox-from hide-extra" ng-click="show(message)">
+          {{message.from}}
+        </td>
+        <td class="inbox-flags hide-extra">
+          <span
+            ng-if="!message.starred"
+            class="glyphicon glyphicon-star-empty"
+            aria-hidden="true"
+            ng-click="star(message)">
+          </span>
+
+          <span
+            ng-if="message.starred hide-extra"
+            class="glyphicon glyphicon-star"
+            aria-hidden="true"
+            ng-click="star(message)">
+          </span>
+
+          <span
+            ng-if="!message.read hide-extra"
+            class="label label-danger">
+            New
+          </span>
+        </td>
+        <td class="inbox-subject" ng-click="show(message)">
           {{message.title}}
-        </a>
-
-        <span
-          ng-if="!message.read"
-          class="label label-danger">
-          New
-        </span>
-        
-        <span
-          ng-if="!message.starred"
-          class="pull-right glyphicon glyphicon-star-empty"
-          aria-hidden="true"
-          ng-click="star(message)">
-        </span>
-
-        <span
-          ng-if="message.starred"
-          class="pull-right glyphicon glyphicon-star"
-          aria-hidden="true"
-          ng-click="star(message)">
-        </span>
-
-      </h3>
-    </div>
-    <div ng-bind-html="message.content.substr(0,100)" class="panel-body"></div>
+        </td>
+        <td class="inbox-preview" ng-click="show(message)">
+          {{message.content}}
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
-
-<div ui-view></div>
