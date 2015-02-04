@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var request = require('request');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -14,8 +15,8 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword', function (err, users) {
-    if(err) return res.send(500, err);
+  User.find({}, '-salt -hashedPassword', function(err, users) {
+    if (err) return res.send(500, err);
     res.json(200, users);
   });
 };
@@ -23,24 +24,30 @@ exports.index = function(req, res) {
 /**
  * Creates a new user
  */
-exports.create = function (req, res, next) {
+exports.create = function(req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
+    var token = jwt.sign({
+      _id: user._id
+    }, config.secrets.session, {
+      expiresInMinutes: 60 * 5
+    });
+    res.json({
+      token: token
+    });
   });
 };
 
 /**
  * Get a single user
  */
-exports.show = function (req, res, next) {
+exports.show = function(req, res, next) {
   var userId = req.params.id;
 
-  User.findById(userId, function (err, user) {
+  User.findById(userId, function(err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
     console.log("LOGGING USER JSON", user);
@@ -54,7 +61,7 @@ exports.show = function (req, res, next) {
  */
 exports.destroy = function(req, res) {
   User.findByIdAndRemove(req.params.id, function(err, user) {
-    if(err) return res.send(500, err);
+    if (err) return res.send(500, err);
     return res.send(204);
   });
 };
@@ -67,8 +74,8 @@ exports.changePassword = function(req, res, next) {
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
 
-  User.findById(userId, function (err, user) {
-    if(user.authenticate(oldPass)) {
+  User.findById(userId, function(err, user) {
+    if (user.authenticate(oldPass)) {
       user.password = newPass;
       user.save(function(err) {
         if (err) return validationError(res, err);
@@ -84,22 +91,21 @@ exports.changePassword = function(req, res, next) {
  * Query for users by skills
  */
 exports.search = function(req, res, next) {
-  // return users who have all of the specified skills
-  if(req.body.hasAllSkills){
-    User.find({'skills': { $all: req.body.skills}}, '-salt -hashedPassword', 
-     function(err, users) {
-      if (err) return next(err);
-      if (!users) return res.json(401);
-      res.json(users);
-    });
-  } else { // return users who have at least one of the skills
-    User.find({'skills': { $in: req.body.skills }}, '-salt -hashedPassword', 
-     function(err, users) {
-      if (err) return next(err);
-      if (!users) return res.json(401);
-      res.json(users);
-    });
-  }
+  var options = {
+    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill),
+    headers: {
+      'User-Agent': 'scottrice10'
+    }
+  };
+
+  request(options, function(error, response, body) {
+    if (!error) {
+      res.send([JSON.parse(decodeURIComponent(response.body))]);
+    } else {
+      console.log(error);
+      res.send(500);
+    }
+  })
 };
 
 /**
@@ -123,30 +129,37 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
-exports.getUserProfile = function(req, res, next){
+exports.getUserProfile = function(req, res, next) {
 
-  User.findOne({'github.login': req.params.githubUsername},
+  User.findOne({
+      'github.login': req.params.githubUsername
+    },
     '-salt -hashedPassword',
-    function(err, user){
-      if (err){
+    function(err, user) {
+      if (err) {
         return next(err);
       }
-      if (!user){
+      if (!user) {
         return res.send('Could not find that profile', 404);
       }
       //console.log("THISIS THE USER DATA ON THE SERVER", user);
       res.json(user);
-  });
+    });
 };
 
-exports.postNewSkill = function(req, res, next){
+exports.postNewSkill = function(req, res, next) {
   //TODO verify that user authorized to add a skill on server side
 
-  User.findOneAndUpdate(
-    {'github.login': req.params.githubUsername},
-    {$push: {skills: req.body}},
-    {safe: true},
-    function(err, user){ //user is the full updated user document (a js object)
+  User.findOneAndUpdate({
+      'github.login': req.params.githubUsername
+    }, {
+      $push: {
+        skills: req.body
+      }
+    }, {
+      safe: true
+    },
+    function(err, user) { //user is the full updated user document (a js object)
       if (err) {
         res.send(500);
       } else {

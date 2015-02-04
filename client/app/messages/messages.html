@@ -1,0 +1,29 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Messages</h1>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div id="messages" class="row">
+
+    <!-- Side nav bar -->
+    <div class="col-md-2">
+
+      <button id="inbox-back" type="button" class="btn btn-default btn-md" ui-sref="messages.compose">
+        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Compose
+      </button>
+      <div ng-include="'app/messages/components/sidebar.html'"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="col-md-10">
+      <div class="row side-margin-20">
+        <div ui-view></div>
+      </div>
+    </div>
+
+  </div>
+</div>

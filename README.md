@@ -1,34 +1,42 @@
-# Project Name
+# Tikr
+[![Circle CI](https://circleci.com/gh/FatalBadgers/tikr/tree/dev.svg?style=svg)](https://circleci.com/gh/FatalBadgers/tikr/tree/dev)
+[![Stories in Ready](https://badge.waffle.io/FatalBadgers/tikr.svg?label=ready&title=Ready)](http://waffle.io/FatalBadgers/tikr)
 
-> Awesome project description
+Tikr is an application that blends the best of GitHub with the best of Linked in. This is a expansion of a project initially concieved by Mike Staub, Bryan Venable, Travis Chapman, and Richard VanBreemen. You can find the original repo on GitHub [here](https://github.com/tikr/tikr).
 
-## Team
+## Development Team
 
-  - __Product Owner__: Mike Staub (mikestaub)
-  - __Scrum Master__: Bryan Venable (bryanlvenable)
-  - __Development Team Members__: Mike (mikestaub), Bryan (bryanlvenable), Travis (teechap), Richard (rvbsanjose)
+* Project Owner [Tim Martin](https://github.com/tmartin1)
+* Scrum Master [Scott Rice](https://github.com/scottrice10)
+* Build Master [Kevin Primat](https://github.com/kxprim)
+* UX Lead [Yan Fan](https://github.com/yanarchy)
+
 
 ## Table of Contents
 
+1. [Team](#team)
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
     1. [Tasks](#tasks)
-1. [Team](#team)
 1. [Contributing](#contributing)
 
 ## Usage
 
-> Some usage instructions
+```sh
+grunt serve
+```
+
+Browser window will open at localhost:9000 with the app.
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node
+- Express
+- Angular JS
+- MongoDB
+- Mongoose
 
 ## Development
 <img src='https://travis-ci.org/tikr/tikr.svg?branch=master'>
@@ -45,7 +53,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/FatalBadgers/tikr/wiki/Brainstorming)
 
 
 ## Contributing

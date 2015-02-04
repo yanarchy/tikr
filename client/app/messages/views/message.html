@@ -1,0 +1,8 @@
+<div ng-include="'app/messages/components/back-to-inbox-button.html'"></div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{message.title}}</h3>
+  </div>
+  <div ng-bind-html="message.content" class="panel-body">{{message.content}}</div>
+</div>
