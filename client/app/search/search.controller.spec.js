@@ -19,6 +19,7 @@ describe('Controller: SearchCtrl', function() {
   }));
 
   it('should be able to fetch all users by language = javascript', function() {
+    $scope.TEST_USER = 'scottrice10';
     createController();
     var searchInput = null;
 

@@ -5,10 +5,10 @@ Note: This is a template copied from main
 
 angular.module('tikrApp')
   .controller('SkillsCtrl', function ($scope, $http, Auth) {
-    $scope.awesomeThings = [];
+    $scope.awesomekills = [];
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
+    $http.get('/api/skills').success(function(awesomeSkills) {
+      $scope.awesomeSkills = awesomeSkills;
     });
 
     $scope.isCollapsed = true;
@@ -16,19 +16,19 @@ angular.module('tikrApp')
     $scope.isAdmin = Auth.isAdmin;
     $scope.getCurrentUser = Auth.getCurrentUser;
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
+    $scope.addSkill = function() {
+      if($scope.newSkill === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+      $http.post('/api/skills', { name: $scope.newSkills });
+      $scope.newSkill = '';
     };
 
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.deleteSkill = function(skill) {
+      $http.delete('/api/skills/' + skill._id);
     };
   });
