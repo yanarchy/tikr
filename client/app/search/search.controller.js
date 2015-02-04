@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('SearchCtrl', function($scope, $http, $q, User) {
+  .controller('SearchCtrl', function($scope, $http, $q, User, Auth) {
     $scope.users = [];
     $scope.searchStarted = false;
 
     // returns a promise
     $scope.fetchUsers = function(language) {
       User.search({
-        skill: language
+        skill: language,
+        username: $scope.TEST_USER || Auth.getCurrentUser().github.login
       }, function(data) {
         $scope.searchStarted = true;
         $scope.data = data[0];
@@ -22,7 +23,7 @@ angular.module('tikrApp')
       $scope.languages = [];
       $http.get('/api/languages').success(function(data) {
         data.forEach(function(language) {
-          $scope.languages.push(language.Name + " ");
+          $scope.languages.push(language.Name);
         });
 
         if(!input){
@@ -32,7 +33,7 @@ angular.module('tikrApp')
         var filtered = [];
         $scope.languages.forEach(function(language) {
           if(language.toLowerCase().indexOf(input.toLowerCase()) !== -1) {
-            filtered.push(language + " ");
+            filtered.push(language);
           }
         });
 

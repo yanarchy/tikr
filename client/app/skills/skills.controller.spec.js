@@ -8,14 +8,12 @@ describe('Controller: SkillsCtrl', function () {
   // load the controller's module
   beforeEach(module('tikrApp'));
 
-  var MainCtrl,
-      scope,
-      $httpBackend;
+  var scope, $httpBackend, SkillsCtrl;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
+    $httpBackend.expectGET('/api/skills')
       .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
@@ -24,8 +22,7 @@ describe('Controller: SkillsCtrl', function () {
     });
   }));
 
-  // it('should attach a list of things to the scope', function () {
-  //   $httpBackend.flush();
-  //   expect(scope.awesomeThings.length).toBe(4);
-  // });
+  it('should attach a list of skills to the scope', function () {
+
+  });
 });
