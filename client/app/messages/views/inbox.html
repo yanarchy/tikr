@@ -1,7 +1,8 @@
 <h1>Inbox</h1>
 <br>
 <div class="panel panel-default">
-  <table class="table table-striped inbox-display">
+  <p class="panel-body" ng-if="messages.length === 0">You have no messages in your inbox.</p>
+  <table ng-if="messages.length > 0" class="table table-striped inbox-display">
     <tr>
       <th class="inbox-from">From</th>
       <th class="inbox-flags">Flags</th>
