@@ -23,7 +23,8 @@ angular.module('tikrApp')
         isArray: true,
         params: {
           id: 'me',
-          controller: 'search'
+          controller: 'search',
+          skill: null
         }
       }
 	  });

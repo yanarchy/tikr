@@ -11,6 +11,7 @@ Tikr is an application that blends the best of GitHub with the best of Linked in
 * Build Master [Kevin Primat](https://github.com/kxprim)
 * UX Lead [Yan Fan](https://github.com/yanarchy)
 
+
 ## Table of Contents
 
 1. [Team](#team)

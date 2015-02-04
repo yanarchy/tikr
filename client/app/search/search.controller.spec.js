@@ -1,29 +1,33 @@
 'use strict';
 
-describe('Controller: SearchCtrl', function () {
+describe('Controller: SearchCtrl', function() {
 
   // load the controller's module
   beforeEach(module('tikrApp'));
 
-  var SearchCtrl,
-      scope,
-      $httpBackend;
+  var SearchCtrl, $scope, createController, httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
-    $httpBackend = _$httpBackend_;
-    $httpBackend.expectPOST('/api/users/me/search')
-      .respond([{'name': 'joe'}, {'name':'jim'}]);
-    scope = $rootScope.$new();
-    SearchCtrl = $controller('SearchCtrl', {
-      $scope: scope
-    });
+  beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+    httpBackend = $httpBackend;
+    $scope = $rootScope.$new();
+    createController = function() {
+      SearchCtrl = $controller('SearchCtrl', {
+        $scope: $scope
+      });
+    }
   }));
 
-  it('should be able to fetch all users', function () {
-    scope.fetchUsers()
-    .then(function(users){
-      expect(users.length).toBe(2);
+  it('should be able to fetch all users by language = javascript', function() {
+    createController();
+    var searchInput = null;
+
+    httpBackend.whenPOST('/api/users/me/search').respond(function(method, url, data, headers){
+      searchInput = JSON.parse(data).skill;
+      return [302, {}, {}];
     });
+    httpBackend.flush();
+
+    expect(searchInput).toBe('javascript');
   });
 });

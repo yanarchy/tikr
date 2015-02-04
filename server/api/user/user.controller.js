@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var request = require('request');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -90,7 +91,15 @@ exports.changePassword = function(req, res, next) {
  * Query for users by skills
  */
 exports.search = function(req, res, next) {
+  var options = {
+    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill),
+    headers: {
+      'User-Agent': 'scottrice10'
+    }
+  };
+
   // return users who have all of the specified skills
+<<<<<<< HEAD
   if (req.body.hasAllSkills) {
     User.find({
         'skills': {
@@ -113,7 +122,22 @@ exports.search = function(req, res, next) {
         if (!users) return res.json(401);
         res.json(users);
       });
+=======
+  if(req.body.hasAllSkills && req.body.skill){
+    //nothing now
+  } else if(req.body.skill) { // return users who have at least one of the skills
+    //nothing now
+>>>>>>> 126711ac677d07430659d9c192d77e0a22a04415
   }
+
+  request(options , function (error, response, body) {
+    if (!error) {
+      res.send([JSON.parse(decodeURIComponent(response.body))]);
+    } else {
+      console.log(error);
+      res.send(500);
+    }
+  })
 };
 
 /**
