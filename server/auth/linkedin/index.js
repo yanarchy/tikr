@@ -6,13 +6,12 @@ var auth = require('../auth.service');
 
 var router = express.Router();
 
-router
-	.get('/', passport.authenticate('linkedin', {
-		failureRedirect: '/signup',
-		session: false
-	}))
+router.get('/', passport.authenticate('linkedin', {
+	failureRedirect: '/signup',
+	session: false
+}))
 
-.get('/callback', passport.authenticate('linkedin', {
+router.get('/callback', passport.authenticate('linkedin', {
 	failureRedirect: '/signup',
 	session: false
 }), auth.setTokenCookie);
