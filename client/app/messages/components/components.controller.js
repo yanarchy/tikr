@@ -30,6 +30,4 @@ angular.module('tikrApp')
 			return route === $location.path();
 		};
 
-		console.log('in comp', $scope.messages);
-
 	});
