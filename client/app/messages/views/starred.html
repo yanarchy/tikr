@@ -1,7 +1,8 @@
 <h1>Starred Messages</h1>
 <br>
 <div class="panel panel-default">
-  <table class="table table-striped inbox-display">
+  <p class="panel-body" ng-if="starCount === 0">You have no starred messages.</p>
+  <table ng-if="starCount > 0" class="table table-striped inbox-display">
     <tr>
       <th class="inbox-from">From</th>
       <th class="inbox-flags">Flags</th>
