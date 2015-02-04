@@ -48,7 +48,19 @@
                 <dl class="lead dl-horizontal">
 
                   <dt>Username</dt>
-                  <dd><a href="{{user.html_url}}" target="_blank"><b>{{user.login}}</b></a></dd>
+                  <dd>
+                    <a href="{{user.html_url}}" target="_blank">
+                      <b>{{user.login}}</b>
+                    </a>
+                  </dd>
+
+                  <dt>Sample work</dt>
+                  <dd>
+                    <a ng-repeat="repo in user.repos" href="{{repo.html_url}}" target="_blank">
+                      <b>{{repo.name}}{{$last ? '' : ', '}} </b>
+                    </a>
+                  </dd>
+
                 </dl>
               </label>
             </div>
