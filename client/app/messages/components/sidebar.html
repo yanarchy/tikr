@@ -1,4 +1,14 @@
-<div class="list-group" ng-controller="MsgComponentsCtrl">
+<div class="list-group">
+
+<!-- TODO: Refactor sidebar to populate with ng-repeat (isActive not working).
+    <a
+      ng-repeat="item in sidebar"
+      ui-sref="{{item.sref}}"
+      class="ng-class: {active: isActive('{{item.link}}')}; list-group-item">
+      {{item.title}}
+      <span class="badge">{{item.badge}}</span>
+    </a>
+ -->
 
   <a
     ui-sref="messages.inbox"
@@ -24,32 +34,28 @@
 
 <!-- 
 
-<div ng-controller="MsgComponentsCtrl">
+<ul class="nav nav-tabs nav-pills nav-stacked">
 
-  <ul class="nav nav-tabs nav-pills nav-stacked">
+  <li
+    role="presentation"
+    ng-class="{active: isActive('/messages/inbox')}">
+    <a ui-sref="messages.inbox">Inbox<span class="badge pull-right">{{messages.length}}</span>
+    </a>
+  </li>
 
-    <li
-      role="presentation"
-      ng-class="{active: isActive('/messages/inbox')}">
-      <a ui-sref="messages.inbox">Inbox<span class="badge pull-right">{{messages.length}}</span>
-      </a>
-    </li>
+  <li
+    role="presentation"
+    ng-class="{active: isActive('/messages/sent')}">
+    <a ui-sref="messages.sent">Sent</a>
+  </li>
 
-    <li
-      role="presentation"
-      ng-class="{active: isActive('/messages/sent')}">
-      <a ui-sref="messages.sent">Sent</a>
-    </li>
+  <li
+    role="presentation"
+    ng-class="{active: isActive('/messages/starred')}">
+    <a ui-sref="messages.starred">Starred<span class="badge pull-right">{{starred}}</span>
+    </a>
+  </li>
 
-    <li
-      role="presentation"
-      ng-class="{active: isActive('/messages/starred')}">
-      <a ui-sref="messages.starred">Starred<span class="badge pull-right">{{starred}}</span>
-      </a>
-    </li>
-
-  </ul>
-
-</div>
+</ul>
 
  -->

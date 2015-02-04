@@ -9,20 +9,27 @@ angular.module('tikrApp')
 		$scope.getCurrentUser = Auth.getCurrentUser;
 
 		// Defines the side menu properties.
-		$scope.menu = [{
+		$scope.sidebar = [{
 			'title': 'Inbox',
-			'link': '/inbox'
+			'sref': 'messages.inbox',
+			'link': 'inbox',
+			'badge': $scope.messages ? $scope.messages.length : 0
 		}, {
 			'title': 'Sent',
-			'link': '/sent'
+			'sref': 'messages.sent',
+			'link': 'sent'
 		}, {
 			'title': 'Starred',
-			'link': '/starred'
+			'sref': 'messages.starred',
+			'link': 'starred',
+			'badge': $scope.starred || 0
 		}];
 
 		// Returns boolean of current state.
 		$scope.isActive = function(route) {
 			return route === $location.path();
 		};
+
+		console.log('in comp', $scope.messages);
 
 	});

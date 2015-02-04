@@ -1,19 +1,44 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MessageCtrl', ['$scope', '$state', 'messageService', function($scope, $state, messageService) {
+  .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
+    $scope.starred = 0;
 
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
+
+    // Defines the side menu properties.
+    // TODO: Refactor sidebar to populate with ng-repeat.
+    $scope.sidebar = [{
+      'title': 'Inbox',
+      'sref': 'messages.inbox',
+      'link': '/messages/inbox',
+      'badge': $scope.messages ? $scope.messages.length : 0
+    }, {
+      'title': 'Sent',
+      'sref': 'messages.sent',
+      'link': '/messages/sent'
+    }, {
+      'title': 'Starred',
+      'sref': 'messages.starred',
+      'link': '/messages/starred',
+      'badge': $scope.starred || 0
+    }];
+
+    // Returns boolean of current state.
+    $scope.isActive = function(route) {
+      return route === $location.path();
+    };
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.inbox = function() {
       messageService.inbox().then(function(messages) {
         $scope.messages = messages;
+        console.log(messages);
       });
     };
 
-    // Fetches a message.
+    // Fetches a specific message.
     $scope.show = function(message) {
       messageService.update(message, {
         read: true
