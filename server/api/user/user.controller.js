@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var request = require('request');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -84,22 +85,28 @@ exports.changePassword = function(req, res, next) {
  * Query for users by skills
  */
 exports.search = function(req, res, next) {
+  var options = {
+    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill),
+    headers: {
+      'User-Agent': 'scottrice10'
+    }
+  };
+
   // return users who have all of the specified skills
-  if(req.body.hasAllSkills){
-    User.find({'skills': { $all: req.body.skills}}, '-salt -hashedPassword', 
-     function(err, users) {
-      if (err) return next(err);
-      if (!users) return res.json(401);
-      res.json(users);
-    });
-  } else { // return users who have at least one of the skills
-    User.find({'skills': { $in: req.body.skills }}, '-salt -hashedPassword', 
-     function(err, users) {
-      if (err) return next(err);
-      if (!users) return res.json(401);
-      res.json(users);
-    });
+  if(req.body.hasAllSkills && req.body.skill){
+    //nothing now
+  } else if(req.body.skill) { // return users who have at least one of the skills
+    //nothing now
   }
+
+  request(options , function (error, response, body) {
+    if (!error) {
+      res.send([JSON.parse(decodeURIComponent(response.body))]);
+    } else {
+      console.log(error);
+      res.send(500);
+    }
+  })
 };
 
 /**

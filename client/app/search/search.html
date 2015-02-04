@@ -1,15 +1,55 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div style='text-align: center;'>
-  <input type='radio' ng-model='hasAllSkills' ng-value='true'>has all skills</input>
-  <input type='radio' ng-model='hasAllSkills' ng-value='false'>has at least one of the following skills</input>
-  <br>
-  search by skills (comma seperated list)
-  <input type='text' ng-model='skills' ng-list></input>
+  Search by language:
+  <input type='text' ng-model='skill'>
   <button ng-click='fetchUsers()'>search</button>
-<div>
-<div ng-repeat='user in users'>
-   {{ user.name }}
 </div>
+
+<div class="container-fluid app-font">
+  <div class="row"></div>
+
+  <div class="row" style="margin-top:20px;">
+    <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" style="padding-top: 20px;"></div>
+
+    <div class="col-sm-8 col-md-8 col-md-offset-0 main">
+
+      <div class="row-fluid" ng-if="(users.length <= 0 || data.errors.length > 0) && searchStarted">
+        <span>
+          Your search for<b> {{skill}} </b>did not match any documents...
+            <br/><br/>
+          * Suggestions: Make sure all words are spelled correctly.</br>
+          * Use similar words or synonyms.</br>
+          * Try more general keywords.
+        </span>
+      </div>
+
+      <div class="row-fluid main-section" style="min-height:500px" ng-if="users.length > 0 && searchStarted">
+        <div ng-bind="(data.total_count ? (data.total_count | number) : 0) + ' results found'"></div>
+
+        <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+
+          <div class="container">
+            <a href="{{user.html_url}}" target="_blank">
+              <img class="img-rounded profile-img pull-left" src="{{user.avatar_url}}">
+            </a>
+            <div class="text-left">
+              <label>
+                <dl class="lead dl-horizontal">
+
+                  <dt>Username</dt>
+                  <dd><a href="{{user.html_url}}" target="_blank"><b>{{user.login}}</b></a></dd>
+                </dl>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 

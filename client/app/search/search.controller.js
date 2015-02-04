@@ -1,27 +1,23 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('SearchCtrl', function ($scope, $http, $q, User) {
-   $scope.users = [];
-   $scope.skills = [];
-   $scope.hasAllSkills = false;
+  .controller('SearchCtrl', function($scope, $http, $q, User) {
+    $scope.users = [];
+    $scope.skill = 'javascript';
+    $scope.searchStarted = false;
 
-   // returns a promise
-   $scope.fetchUsers = function(){
-     return $q(function(resolve, reject){
-       $scope.users = User.search({'skills': $scope.skills,
-                                   'hasAllSkills': $scope.hasAllSkills});
-       if(!$scope.users){
-        reject('failed');
-       } else{
-        resolve($scope.users);
-       }
-    });
-   };
+    // returns a promise
+    $scope.fetchUsers = function() {
 
-    $scope.fetchUsers()
-    .then(function(users){
-      $scope.users = users;
-    });
+      User.search({
+        skill: $scope.skill
+      }, function(data) {
+        $scope.searchStarted = true;
+        $scope.data = data[0];
+        $scope.users = $scope.data.items;
+      });
+    };
 
+    //init
+    $scope.fetchUsers();
   });

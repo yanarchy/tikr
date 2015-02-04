@@ -32,7 +32,7 @@ describe('Message Model', function () {
     message.should.have.property('content');
     message.should.have.property('read');
     message.should.have.property('starred');
-  })
+  });
 
   it('should begin with no messages', function (done) {
     Message.find({}, function (err, messages) {
