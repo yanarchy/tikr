@@ -2,7 +2,7 @@
 
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
-    $scope.starred = 0;
+    $scope.starCount = 0;
 
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
@@ -31,7 +31,7 @@ angular.module('tikrApp')
     };
 
     // Fetches a messages list that belongs to the authenticated user.
-    $scope.inbox = function() {
+    $scope.getInbox = function() {
       messageService.inbox().then(function(messages) {
         $scope.messages = messages;
       });
@@ -42,7 +42,13 @@ angular.module('tikrApp')
       messageService.sent().then(function(messages) {
         $scope.sentMessages = messages;
       });
-    }
+    };
+
+    // Fetches list of starred messages.
+    // TODO: Refactor this to be a filter on inbox.
+    $scope.getStarred = function() {
+      // Filter inbox to only show starred messages.
+    };
 
     // Fetches a specific message.
     $scope.show = function(message) {
@@ -64,9 +70,10 @@ angular.module('tikrApp')
     };
 
     // Creates a new private message to a user.
-    // Messages have the following properties: 
-    // to(number), from(number), title(string), read(boolean), starred(boolean)
+    // Messages should be sent with the following properties:
+    // to (github login), from (string: github login), title (string)
     $scope.create = function(newMessage) {
+      // TODO: Notify user that the message was sent or not.
       messageService.create(newMessage).then(function(doc) {
         $scope.messages.push(doc);
         $state.transitionTo('messages.inbox');
@@ -75,7 +82,22 @@ angular.module('tikrApp')
       });
     };
 
-    $scope.inbox();
-    // $state.transitionTo('messages.inbox');
+    // Functions to load needed messages based on state.
+    var fetchDirector = {
+      'messages': $scope.inbox,
+      'messages.inbox': $scope.getInbox,
+      'messages.sent': $scope.getSent,
+      'messages.starred': $scope.getStarred
+    };
+
+    // On state change, if state is inbox, sent, or stared, fetch appropriate messages.
+    $scope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams) {
+        if (fetchDirector[toState.name]) fetchDirector[toState.name]();
+      }
+    );
+
+    // Load inbox for default view.
+    $scope.getInbox();
 
   }]);
