@@ -1,5 +1,55 @@
-<div class="list-group">
-  <a href="#" class="list-group-item active">Inbox<span class="badge">{{messages.length}}</span></a>
-  <a href="#" class="list-group-item">Sent</a>
-  <a href="#" class="list-group-item">Starred<span class="badge">{{starred}}</span></a>
+<div class="list-group" ng-controller="MsgComponentsCtrl">
+
+  <a
+    ui-sref="messages.inbox"
+    class="ng-class: {active: isActive('/messages/inbox')}; list-group-item">
+    Inbox
+    <span class="badge">{{messages.length}}</span>
+  </a>
+
+  <a
+    ui-sref="messages.sent"
+    class="ng-class: {active: isActive('/messages/sent')}; list-group-item">
+    Sent
+  </a>
+
+  <a
+    ui-sref="messages.starred"
+    class="ng-class: {active: isActive('/messages/starred')}; list-group-item">
+    Starred
+    <span class="badge">{{starred}}</span>
+  </a>
+
 </div>
+
+<!-- 
+
+<div ng-controller="MsgComponentsCtrl">
+
+  <ul class="nav nav-tabs nav-pills nav-stacked">
+
+    <li
+      role="presentation"
+      ng-class="{active: isActive('/messages/inbox')}">
+      <a ui-sref="messages.inbox">Inbox<span class="badge pull-right">{{messages.length}}</span>
+      </a>
+    </li>
+
+    <li
+      role="presentation"
+      ng-class="{active: isActive('/messages/sent')}">
+      <a ui-sref="messages.sent">Sent</a>
+    </li>
+
+    <li
+      role="presentation"
+      ng-class="{active: isActive('/messages/starred')}">
+      <a ui-sref="messages.starred">Starred<span class="badge pull-right">{{starred}}</span>
+      </a>
+    </li>
+
+  </ul>
+
+</div>
+
+ -->
