@@ -12,12 +12,15 @@
 
 .inbox-display tr {
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
 }
 
 .inbox-from {
   width: 10%;
   min-width: 100px;
-  max-width: 150px;
+  max-width: 200px;
 }
 
 .inbox-flags {
@@ -29,16 +32,10 @@
 .inbox-subject {
   width: 15%;
   min-width: 100px;
-  max-width: 150px;
+  max-width: 200px;
 }
 
 .inbox-preview {
   width: 65%;
   min-width: 200px;
-}
-
-.hide-extra {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow:ellipsis;
 }

@@ -33,6 +33,24 @@ angular.module('tikrApp')
     // Fetches a messages list that belongs to the authenticated user.
     $scope.inbox = function() {
       messageService.inbox().then(function(messages) {
+        // For testing
+        messages.push({
+          to: 'Me',
+          from: 'From Someone',
+          title: 'test message 1',
+          content: 'This is an example message for testing purposes.',
+          read: false,
+          starred: false
+        });
+        messages.push({
+          to: 'Me',
+          from: 'From Someone Else',
+          title: 'test message 1',
+          content: 'This is a different example message, also for testing purposes.',
+          read: false,
+          starred: false
+        });
+        //
         $scope.messages = messages;
       });
     };
