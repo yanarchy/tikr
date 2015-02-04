@@ -8,7 +8,10 @@ var github = require('octonode');
 
 var UserSchema = new Schema({
   name: String,
-  email: { type: String, lowercase: true },
+  email: {
+    type: String,
+    lowercase: true
+  },
   role: {
     type: String,
     default: 'user'
@@ -21,9 +24,7 @@ var UserSchema = new Schema({
   languages: {}
 });
 
-/**
- * Virtuals
- */
+// Virtuals
 UserSchema
   .virtual('password')
   .set(function(password) {
@@ -55,9 +56,7 @@ UserSchema
     };
   });
 
-/**
- * Validations
- */
+// Validations
 
 // Validate empty email
 UserSchema
@@ -80,23 +79,23 @@ UserSchema
   .path('email')
   .validate(function(value, respond) {
     var self = this;
-    this.constructor.findOne({email: value}, function(err, user) {
-      if(err) throw err;
-      if(user) {
-        if(self.id === user.id) return respond(true);
+    this.constructor.findOne({
+      email: value
+    }, function(err, user) {
+      if (err) throw err;
+      if (user) {
+        if (self.id === user.id) return respond(true);
         return respond(false);
       }
       respond(true);
     });
-}, 'The specified email address is already in use.');
+  }, 'The specified email address is already in use.');
 
 var validatePresenceOf = function(value) {
   return value && value.length;
 };
 
-/**
- * Pre-save hook
- */
+// Pre-save hook
 UserSchema
   .pre('save', function(next) {
     if (!this.isNew) return next();
@@ -107,46 +106,39 @@ UserSchema
       next();
   });
 
-/**
- * Methods
- */
+// Methods
 UserSchema.methods = {
-  /**
-   * Authenticate - check if the passwords are the same
-   *
-   * @param {String} plainText
-   * @return {Boolean}
-   * @api public
-   */
+  // Authenticate - check if the passwords are the same/
+  // Returns a {Boolean}
   authenticate: function(plainText) {
     return this.encryptPassword(plainText) === this.hashedPassword;
   },
 
-  getSkills: function(token){
+  getSkills: function(token) {
     var self = this;
     var client = github.client(token);
 
-    client.get('/users/'+self.github.login+'/repos', {}, function(err, status, repos, headers){
+    client.get('/users/' + self.github.login + '/repos', {}, function(err, status, repos, headers) {
       var totalBytes = 0;
       var languages = {};
       var count = 0;
-      for(var i = 0; i < repos.length; i++){
-        var url = '/repos/'+self.github.login+'/'+repos[i].full_name.split('/')[1]+'/languages';
-        client.get(url, function(err, status, body, headers){
-          for(var key in body){
+      for (var i = 0; i < repos.length; i++) {
+        var url = '/repos/' + self.github.login + '/' + repos[i].full_name.split('/')[1] + '/languages';
+        client.get(url, function(err, status, body, headers) {
+          for (var key in body) {
             totalBytes += body[key];
-            if(languages.hasOwnProperty(key)){
+            if (languages.hasOwnProperty(key)) {
               languages[key] += body[key];
             } else {
               languages[key] = body[key];
             }
           }
           count++;
-          if(count === repos.length){
+          if (count === repos.length) {
             // done, save to db
             self.languages = languages;
-            self.save(function(err){
-              if(err) throw err;
+            self.save(function(err) {
+              if (err) throw err;
             });
           }
         });
@@ -154,23 +146,12 @@ UserSchema.methods = {
     });
   },
 
-  /**
-   * Make salt
-   *
-   * @return {String}
-   * @api public
-   */
+  // Make salt
   makeSalt: function() {
     return crypto.randomBytes(16).toString('base64');
   },
 
-  /**
-   * Encrypt password
-   *
-   * @param {String} password
-   * @return {String}
-   * @api public
-   */
+  // Encrypt password
   encryptPassword: function(password) {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
