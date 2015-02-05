@@ -1,22 +1,5 @@
-<!-- <div class="row">
-  <h1 class="pull-left">Inbox</h1><span>same line?</span>
-</div> -->
+<div ng-include="'app/messages/components/inbox-nav.html'"></div>
 
-<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">New</a></li>
-  <li role="presentation"><a href="#">Starred</a></li>
-  <li role="presentation"><a href="#">All</a></li>
-</ul>
-
-
-<!-- 
-<nav class="navbar navbar-default">
-  <label class="navbar-brand">Inbox</label>
-</nav>
- -->
-
-
-<br>
 <div class="panel panel-default">
   <p class="panel-body" ng-if="messages.length === 0">You have no messages in your inbox.</p>
   <table ng-if="messages.length > 0" class="table table-striped inbox-display">
@@ -28,9 +11,11 @@
       <th class="inbox-preview">Message</th>
     </tr>
 
-    <tr ng-repeat="message in messages">
+    <tr ng-repeat="message in messages | filter:search">
 
-      <td class="inbox-from" ng-click="show(message)">
+      <td
+        class="inbox-from"
+        ng-click="show(message)">
         {{message.from}}
       </td>
 
@@ -48,11 +33,15 @@
         </span>
       </td>
 
-      <td class="inbox-subject" ng-click="show(message)">
+      <td
+        class="inbox-subject"
+        ng-click="show(message)">
         {{message.title}}
       </td>
 
-      <td class="inbox-preview" ng-click="show(message)">
+      <td
+        class="inbox-preview"
+        ng-click="show(message)">
         {{message.content}}
       </td>
 
