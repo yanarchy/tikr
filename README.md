@@ -55,6 +55,28 @@ bower install
 
 View the project roadmap [here](https://github.com/FatalBadgers/tikr/wiki/Brainstorming)
 
+### LinkedIn & GitHub
+
+When running on localhost, please set environment variables in your shell before running grunt so the application will work with LinkedIn and GitHub authentication.
+
+Keys and secret keys for LinkedIn and GitHub are provided in a private message.
+
+```sh
+export LINKEDIN_API_KEY=linkedin-api-key
+export LINKEDIN_SECRET_KEY=linkedin-secret-key
+export GITHUB_ID=github-id
+export GITHUB_SECRET=github-secret
+```
+This is common practice to minimize the risk of leaking application keys.
+
+To check whether variables have been set, please use shell command 'echo':
+```sh
+echo $LINKEDIN_API_KEY
+echo $GITHUB_ID
+```
+and so on.
+
+Please do not include a local.env.js file---it will interfere with the config/index.js file.
 
 ## Contributing
 
