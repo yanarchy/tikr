@@ -36,7 +36,7 @@ angular.module('tikrApp')
 
     // Fetches a specific message.
     $scope.show = function(message) {
-      $scope.newCount--;
+      if (!message.read) $scope.newCount--;
       messageService.update(message, {
         read: true
       }).then(function(doc) {

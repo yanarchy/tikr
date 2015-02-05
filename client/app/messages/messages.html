@@ -9,40 +9,44 @@
 <div class="container-fluid">
   <div id="messages" class="row">
 
-    <!-- Current Nav Title and search bar -->
+    <!-- Current view title and search bar -->
     <div class="col-md-12">
 
+      <!-- View title -->
       <div class="col-md-2">
         <h1>{{pageTitle}}</h1><br>
       </div>
 
+      <!-- Message search/filter bar -->
       <div class="col-md-10">
         <br>
-        <div ng-if="pageTitle !== 'Compose'" class="input-group">
+        <!-- <div ng-if="pageTitle !== 'Compose'" class="input-group">
           <label
             for="searchText"
-            class="input-group-addon"
-            id="sizing-addon2">
+            class="input-group-addon">
             Filter Messages:
           </label>
           <input
             id="searchText"
             class="form-control"
-            ng-model="search.$">
-        </div>
+            ng-model="searchText">
+        </div> -->
       </div>
 
     </div>
 
-    <!-- Side nav bar -->
-    <div class="col-md-2">
-      <div ng-include="'app/messages/components/sidebar.html'"></div>
-    </div>
+    <!-- Messages side bar and main content -->
+    <div class="col-md-12">
+      <!-- Side nav bar -->
+      <div class="col-md-2">
+        <div ng-include="'app/messages/components/sidebar.html'"></div>
+      </div>
 
-    <!-- Main content -->
-    <div class="col-md-10">
-      <div class="row side-margin-20">
-        <div ui-view></div>
+      <!-- Main content -->
+      <div class="col-md-10">
+        <div class="row side-margin-20">
+          <div ui-view></div>
+        </div>
       </div>
     </div>
 
