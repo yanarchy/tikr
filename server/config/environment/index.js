@@ -39,13 +39,13 @@ var all = {
         safe: true
       }
     }
-  },
+  }
 
-  github: {
-    clientID:     process.env.GITHUB_ID || 'id',
-    clientSecret: process.env.GITHUB_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/github/callback'
-  },
+  //github: {
+  //  clientID:     process.env.GITHUB_ID || 'id',
+  //  clientSecret: process.env.GITHUB_SECRET || 'secret',
+  //  callbackURL:  (process.env.DOMAIN || '') + '/auth/github/callback'
+  //}
 
 };
 
