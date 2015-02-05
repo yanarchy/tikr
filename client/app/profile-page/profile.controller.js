@@ -127,8 +127,8 @@ angular.module('tikrApp')
       
       // $scope.languages retrieves languages mostly used by person on GitHub
       _.each($scope.languages, function(percentage, lang){
-        console.log('Value', percentage[1]);
-        console.log('Key', lang);
+        // console.log('Value', percentage[1]);
+        // console.log('Key', lang);
 
         langLegend.push(lang);
         data.push([lang, percentage[1], 'test']);

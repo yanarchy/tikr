@@ -10,7 +10,7 @@
   
   <div class="row">
 
-    <div class="col-lg-3">
+    <div class="col-lg-3" id="general">
 
       <ul class="list-group">
         <li class="list-group-item"><img id="profilePic" ng-src="{{userProfile.github.avatar_url}}"></li>
@@ -28,18 +28,16 @@
 
     </div>
 
-    <div class="col-lg-9">
-        <!-- start panel -->
-        <div class="panel panel-default">
-        
-          <div class="panel-heading"><h1>Dashboard</h1></div>
-          <div class="panel-body">
-            
-            <div id='chart'></div>
+    <!-- Skills start -->
+    <div class="col-lg-3" id="skills">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Skills</h4></div>
+        <div class="panel-body">
 
-            <!-- Start Skills -->
-            <div id='skills'>
-              <h3 ng-show="hasSkills()" class="page-header">Skills</h3>
+            <div>
+            Plenty of skills here
+
+              <!-- <h3 ng-show="hasSkills()" class="page-header">Skills</h3> -->
 
               <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
               <!--TODO: fix this behavior when user is not logged in -->
@@ -76,9 +74,23 @@
               <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="skill in userProfile.skills">
                 <li><a target="_blank" ng-href="{{skill.githublink}}">{{skill.skillname}}</a></li>
               </ul>
-
-            <!-- End Skills -->
             </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Skills end -->
+
+    <!-- Languages start -->
+    <div class="col-lg-6" id="languages">
+        <!-- start panel -->
+        <div class="panel panel-default">
+        
+          <div class="panel-heading"><h4>Languages</h4></div>
+          <div class="panel-body">
+            
+            <div id='chart'></div>
+
 
             </div>
 
@@ -87,16 +99,28 @@
         <!-- end panel -->
 
     </div>
-    
+    <!-- Languages end -->
+  
+    <!-- Repos start -->
+    <div class="col-lg-3" id="languages">
+        <!-- start panel -->
+        <div class="panel panel-default">
+        
+          <div class="panel-heading"><h4>Repositories</h4></div>
+          <div class="panel-body" ng-repeat="github in kxprim">
+            
+            <li>List here</li>
+            <li>{{newspost.title}}</li>
+          </div>
+
+          </div>
+      </div>
+        <!-- end panel -->
+
+    </div>
+    <!-- Repos end -->
+
   
 </div>
 
-<footer class="footer">
-    <!--
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
--->
-</footer>
+<footer class="footer"></footer>

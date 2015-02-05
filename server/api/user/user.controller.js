@@ -95,7 +95,7 @@ exports.changePassword = function(req, res, next) {
   });
 };
 
-var getReposPromise = function(user, username) {
+exports.getReposPromise = function(user, username) {
   return new Promise(function(resolve, reject) {
     var repoOptions = {
       url: user.repos_url + "?client_id=" + (process.env.GITHUB_ID || githubKeys.GITHUB_ID)
@@ -119,7 +119,7 @@ var getReposPromise = function(user, username) {
 var changedUsers = [];
 var getUsersPromise = function(users, username) {
   var promises = users.items.map(function(user) {
-    return getReposPromise(user, username)
+    return exports.getReposPromise(user, username)
       .then(function(newUser) {
         return newUser;
       })
@@ -184,6 +184,10 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
+// exports.getReposForProfile = function(){
+
+// };
+
 exports.getUserProfile = function(req, res, next) {
 
   User.findOne({
@@ -197,8 +201,18 @@ exports.getUserProfile = function(req, res, next) {
       if(!user) {
         return res.send('Could not find that profile', 404);
       }
+
+      // Method Kevin
+      exports.getReposPromise(user.github, user.github.login)
+      .then(function(newUser) {
+        user.github = newUser;
+        res.json(user);
+      })
+      .catch(function(error) {
+        console.log(err);
+      });
+
       //console.log("THISIS THE USER DATA ON THE SERVER", user);
-      res.json(user);
     });
 };
 
