@@ -27,7 +27,8 @@
     "passport-twitter": "latest",
     "request": "*",
     "serve-favicon": "~2.0.1",
-    "bluebird": "*"
+    "bluebird": "*",
+    "bower": "*"
   },
   "devDependencies": {
     "connect-livereload": "~0.4.0",
@@ -89,6 +90,7 @@
   "scripts": {
     "start": "node server/app.js",
     "test": "grunt test",
+    "postinstall": "./node_modules/bower/bin/bower install",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
   },
   "private": true
