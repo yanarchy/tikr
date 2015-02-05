@@ -15,7 +15,8 @@ describe('Controller: SearchCtrl', function() {
       SearchCtrl = $controller('SearchCtrl', {
         $scope: $scope
       });
-    }
+    };
+
   }));
 
   it('should be able to fetch all users by language = javascript', function() {
@@ -23,7 +24,7 @@ describe('Controller: SearchCtrl', function() {
     createController();
     var searchInput = null;
 
-    httpBackend.whenPOST('/api/users/me/search').respond(function(method, url, data, headers){
+    httpBackend.whenPOST('/api/users/me/search?pageNumber=1').respond(function(method, url, data, headers){
       searchInput = JSON.parse(data).skill;
       return [302, {}, {}];
     });

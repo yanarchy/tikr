@@ -138,7 +138,7 @@ var getUsersPromise = function(users, username) {
  */
 exports.search = function(req, res, next) {
   var options = {
-    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill) + "&page=1&per_page=10",
+    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill) + "&page=" + req.body.pageNumber + "&per_page=10",
     headers: {
       'User-Agent': req.body.username
     }
