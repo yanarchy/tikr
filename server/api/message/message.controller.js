@@ -87,7 +87,6 @@ exports.inbox = function(req, res, next) {
   });
 };
 
-
 /**
  * Get all messages that a user has sent
  */
