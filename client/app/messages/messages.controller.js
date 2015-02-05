@@ -32,14 +32,14 @@ angular.module('tikrApp')
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
-      messageService.inbox().then(function(messages) {
+      messageService.getInbox().then(function(messages) {
         $scope.messages = messages;
       });
     };
 
     // Fetches list of message objects of messages that were sent by the user.
     $scope.getSent = function() {
-      messageService.sent().then(function(messages) {
+      messageService.getSent().then(function(messages) {
         $scope.sentMessages = messages;
       });
     };
@@ -84,7 +84,7 @@ angular.module('tikrApp')
 
     // Functions to load needed messages based on state.
     var fetchDirector = {
-      'messages': $scope.inbox,
+      'messages': $scope.getInbox,
       'messages.inbox': $scope.getInbox,
       'messages.sent': $scope.getSent,
       'messages.starred': $scope.getStarred

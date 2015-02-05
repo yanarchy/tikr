@@ -78,7 +78,7 @@ exports.inbox = function(req, res, next) {
     if (err) return next(err);
     if (!user) return res.status(401).json();
     Message.find({
-      to: req.user.github.id
+      to: req.user.github.login
     }, function(err, messages) {
       if (err) return next(err);
       if (!messages) return res.status(401).json();
@@ -86,7 +86,6 @@ exports.inbox = function(req, res, next) {
     });
   });
 };
-
 
 /**
  * Get all messages that a user has sent
@@ -98,7 +97,7 @@ exports.sent = function(req, res, next) {
     if (err) return next(err);
     if (!user) return res.status(401).json();
     Message.find({
-      from: req.user.github.id
+      from: req.user.github.login
     }, function(err, messages) {
       if (err) return next(err);
       if (!messages) return res.status(401).json();
