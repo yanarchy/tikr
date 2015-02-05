@@ -10,8 +10,8 @@
   
   <div class="row">
 
-    <div class="col-lg-3">
-
+    <!-- General starts -->
+    <div class="border col-xs-3" id="general">
       <ul class="list-group">
         <li class="list-group-item"><img id="profilePic" ng-src="{{userProfile.github.avatar_url}}"></li>
         <li class="list-group-item"><h4>{{'@'+userProfile.github.login}}</h4></li>
@@ -20,83 +20,102 @@
           <div class="btn-group" id="threeButtons" role="group" aria-label="...">
             <button type="button" class='btn btn-default' ng-click='sendMessageModal(userProfile);'>Message</button>
             <button type="button" class="btn btn-default">Follow</button>
-            <button type="button" class="btn btn-default">Other</button>
+            <button type="button" class="btn btn-default"><a href="{{userProfile.github.blog}}">Website</a></button>
           </div>
 
         </li>
+        <li class="list-group-item">Followers: {{userProfile.github.followers}}</li>
+        <li class="list-group-item">Following: {{userProfile.github.following}}</li>
       </ul>
-
     </div>
+    <!-- General ends -->
 
-    <div class="col-lg-9">
-        <!-- start panel -->
-        <div class="panel panel-default">
-        
-          <div class="panel-heading"><h1>Dashboard</h1></div>
-          <div class="panel-body">
-            
-            <div id='chart'></div>
-            
-            <!-- Start Skills -->
-            <div id='skills'>
-              <h3 ng-show="hasSkills()" class="page-header">Skills</h3>
-
-              <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
-              <!--TODO: fix this behavior when user is not logged in -->
-              <h1 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">You haven't added any skills yet :-(</h1>
-              <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet :-(</h1>
-              <form ng-show="showFormToAddSkills" class="form" name="form" ng-submit="addASkill(form)" novalidate>
-
-                <div class="form-group">
-                  <label>Name of Skill</label>
-
-                  <input type="text" name="skillname" ng-model="skillname" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                  <label>Github Link Demonstrating Your Skill</label>
-
-                  <input type="url" name="githublink" ng-model="githublink" class="form-control" required>
-                </div>
-
-                <div class="form-group has-error">
-                  <p class="help-block" ng-show="form.skillname.$error.required && form.githublink.$error.required && submitted">
-                     Please enter a skill and a link to Github that shows it off.
-                  </p>
-                </div>
-
-                <div>
-                  <button class="btn btn-inverse btn-lg btn-login" type="submit">
-                    Add Skill
-                  </button>
-                </div>
-
-                <hr>
-              </form>
-              <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="skill in userProfile.skills">
-                <li><a target="_blank" ng-href="{{skill.githublink}}">{{skill.skillname}}</a></li>
-              </ul>
-
-            <!-- End Skills -->
-            </div>
-
-            </div>
-
-          </div>
+    <!-- Languages start -->
+    <div class="col-xs-6" id="languages">
+      <!-- start panel -->
+      <div class="panel panel-default">
+        <div class="panel"><h4>Languages</h4></div>
+        <div class="panel-body">
+          <div id='chart'></div>
+        </div>
       </div>
-        <!-- end panel -->
-
+      <!-- end panel -->
     </div>
-    
+    <!-- Languages end -->
   
-</div>
+    <!-- Repos start -->
+    <div class="col-xs-3" id="languages">
+      <!-- start panel -->
+      <div class="panel panel-default">
+        
+        <div><h4>Public Repositories</h4></div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="repo in userProfile.github.repos"><a href="{{repo.git_url}}">{{repo.name}}</a></img></li>
+        </ul>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- Repos ends -->
 
-<footer class="footer">
-    <!--
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+     <!-- Repos start -->
+    <div class="col-xs-3" id="languages">
+      <!-- start panel -->
+      <div class="panel panel-default">
+        
+        <div class="panel"><h4>More graph</h4></div>
+        <div class="panel-body">Stuff</div>
+      </div>
+      <!-- end panel -->
+    </div>
+    <!-- Repos ends -->
+
+    <!-- Skills start -->
+    <div class="col-xs-3" id="skills">
+      <div class="panel panel-default">
+
+        <div class="panel"><h4>Skills</h4></div>
+        <div class="panel-body">
+
+          <!-- <h3 ng-show="hasSkills()" class="page-header">Skills</h3> -->
+
+          <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
+          <!--TODO: fix this behavior when user is not logged in -->
+          <h1 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">You haven't added any skills yet</h1>
+          <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet :-(</h1>
+
+          <form ng-show="showFormToAddSkills" class="form" name="form" ng-submit="addASkill(form)" novalidate>
+            <div class="form-group">
+              <label>Name of Skill</label>
+              <input type="text" name="skillname" ng-model="skillname" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label>Github Link Demonstrating Your Skill</label>
+              <input type="url" name="githublink" ng-model="githublink" class="form-control" required>
+            </div>
+
+            <div class="form-group has-error">
+              <p class="help-block" ng-show="form.skillname.$error.required && form.githublink.$error.required && submitted">Please enter a skill and a link to Github that shows it off.</p>
+            </div>
+
+            <div>
+              <button class="btn btn-inverse btn-lg btn-login" type="submit">Add Skill</button>
+            </div>
+          </form>
+
+          <ul class="nav nav-tabs nav-stacked col-md-4 col-xs-4 col-sm-6" ng-repeat="skill in userProfile.skills">
+            <li><a target="_blank" ng-href="{{skill.githublink}}">{{skill.skillname}}</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <!-- Skills end -->
+
+
   </div>
--->
-</footer>
+  <!-- End of row -->
+</div>
+<!-- End of container -->
+
+<footer class="footer"></footer>

@@ -6,7 +6,7 @@ angular.module('tikrApp')
     return {
 
       // Get the users messages.
-      inbox: function() {
+      getInbox: function() {
         var deffered = $q.defer();
         $http.get('/api/messages/inbox')
           .success(function(data) {
@@ -20,7 +20,7 @@ angular.module('tikrApp')
       },
 
       // Get messages that the user sent.
-      sent: function() {
+      getSent: function() {
         var deffered = $q.defer();
         $http.get('/api/messages/sent')
           .success(function(data) {
@@ -33,7 +33,7 @@ angular.module('tikrApp')
         return deffered.promise;
       },
 
-      // Updates the properties on the message.
+      // Updates a single property on a specific message.
       update: function(message, property) {
         var deffered = $q.defer();
         $http.put('/api/messages/update', {
@@ -55,8 +55,8 @@ angular.module('tikrApp')
       create: function(newMessage) {
         var deffered = $q.defer();
         var message = {
-          to: newMessage.userGithubID,
-          from: Auth.getCurrentUser().github.id,
+          to: newMessage.to,
+          from: Auth.getCurrentUser().github.login,
           title: newMessage.title,
           content: newMessage.message.replace(/\n/g, '<br />')
         };

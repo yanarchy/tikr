@@ -5,14 +5,19 @@ var Schema = mongoose.Schema;
 
 var MessageSchema = new Schema({
   to: {
-    type: Number,
+    // Should be a GitHub username.
+    type: String,
     required: true
   },
   from: {
-    type: Number,
+    // Should be a GitHub username.
+    type: String,
     required: true
   },
-  title: String,
+  title: {
+    type: String,
+    required: true
+  },
   content: {
     type: String,
     required: true

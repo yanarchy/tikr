@@ -1,21 +1,15 @@
 exports.setup = function(User, config) {
   var passport = require('passport');
-  var GitHubStrategy = require('passport-github').Strategy;
-  var githubKeys;
+  var LinkedInStrategy = require('passport-linkedin').Strategy;
 
-  try {
-    githubKeys = require('../../config/local.env.js');
-  } catch(e) {
-    //do nothing
-  }
-
-  passport.use(new GitHubStrategy({
-      clientID: (process.env.GITHUB_ID || githubKeys.GITHUB_ID),
-      clientSecret: (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET)
+  passport.use(new LinkedInStrategy({
+      consumerKey: (process.env.LINKEDIN_API_KEY || githubKeys.LINKEDIN_API_KEY),
+      consumerSecret: (process.env.LINKEDIN_SECRET_KEY || githubKeys.LINKEDIN_SECRET_KEY),
+      callbackURL: 'auth/linkedIn/callback'
     },
     function(token, tokenSecret, profile, done) {
       User.findOne({
-        'github.id': profile.id
+        'linkedin.id': profile.id
       }, function(err, user) {
         if (err) {
           return done(err);
@@ -25,12 +19,12 @@ exports.setup = function(User, config) {
             name: profile.displayName,
             username: profile.username,
             role: 'user',
-            provider: 'github',
-            github: profile._json
+            provider: 'linkedin',
+            linkedin: profile._json
           });
           user.save(function(err) {
             if (err) return done(err);
-            user.getSkills(token);
+            console.log('hello');
             return done(err, user);
           });
         } else {
