@@ -140,7 +140,7 @@ angular.module('tikrApp')
           // ],
 
           columns: data,
-          type: 'donut',
+          type: 'pie',
         },
         pie: {
           width: 20,

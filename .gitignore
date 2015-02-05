@@ -2,5 +2,5 @@ node_modules
 .tmp
 .idea
 client/bower_components
-/server/config/nope.local.env.js
+/server/config/local.env.js
 dist
