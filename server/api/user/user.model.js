@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
-var authTypes = ['github'];
+var authTypes = ['github', 'linkedin'];
 var github = require('octonode');
 
 var UserSchema = new Schema({
@@ -20,6 +20,7 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   github: {},
+  linkedin: {},
   skills: [],
   languages: {}
 });

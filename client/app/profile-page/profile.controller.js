@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('ProfileCtrl', function ($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User) {
+  .controller('ProfileCtrl', function($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User) {
 
     $scope.languages = {};
     $scope.currentUsername = $stateParams.username;
     $scope.showFormToAddSkills = false;
-    $scope.getUserProfile = function(){
+    $scope.getUserProfile = function() {
       var githubUsername = $stateParams.username;
-      var url = 'api/users/profiles/'+githubUsername;
+      var url = 'api/users/profiles/' + githubUsername;
 
       return $http({
         method: 'GET',
         url: url
       }).
-      success(function(profile/*, status, headers, config*/) {
+      success(function(profile /*, status, headers, config*/ ) {
         $scope.userProfile = profile;
         $scope.languages = profile.languages;
-        var totalBytes = _.reduce($scope.languages, function(totalBytes, bytes){
+        var totalBytes = _.reduce($scope.languages, function(totalBytes, bytes) {
           return totalBytes += bytes;
         }, 0);
-        _.map($scope.languages, function(bytes, key){
+        _.map($scope.languages, function(bytes, key) {
           var pct = (bytes / totalBytes * 100);
           return $scope.languages[key] = [bytes, pct];
         });
@@ -29,44 +29,47 @@ angular.module('tikrApp')
 
         return;
       }).
-      error(function(data, status/*headers, config*/) {
+      error(function(data, status /*headers, config*/ ) {
         console.log('There has been an error', data);
-        if (status === 404){
+        if (status === 404) {
           $location.path('/pagenotfound');
         }
         return data;
       });
     };
 
-    $scope.isLoggedInAsCurrentUser = function(){
+    $scope.isLoggedInAsCurrentUser = function() {
       var currentUserPage = $stateParams.username;
       var loggedInUser = Auth.getCurrentUser();
       //console.log(loggedInUser);
-      if (loggedInUser.github && loggedInUser.github.login){
+      if (loggedInUser.github && loggedInUser.github.login) {
         //console.log("LOGGING LINE 51", loggedInUser.github.login, currentUserPage);
-        if (loggedInUser.github.login === currentUserPage){
+        if (loggedInUser.github.login === currentUserPage) {
           return true;
         }
       }
       return false;
     };
 
-    $scope.showAddSkillsForm = function(){
+    $scope.showAddSkillsForm = function() {
       $scope.showFormToAddSkills = true;
     };
 
-    $scope.addASkill = function(formdata){
+    $scope.addASkill = function(formdata) {
       $scope.showFormToAddSkills = false;
       var newSkillName = $scope.skillname;
       var newSkillLink = $scope.githublink;
       //console.log(formdata);
-      if (formdata.$valid){
+      if (formdata.$valid) {
         //submit POST request to server to add a skill to the current user's profile
         var githubUsername = $stateParams.username;
-        var url = 'api/users/profiles/'+githubUsername;
+        var url = 'api/users/profiles/' + githubUsername;
 
-        $http.post(url, {skillname: newSkillName, githublink: newSkillLink}).
-        success(function(profile/*status, headers, config*/) {
+        $http.post(url, {
+          skillname: newSkillName,
+          githublink: newSkillLink
+        }).
+        success(function(profile /*status, headers, config*/ ) {
           $scope.userProfile = profile;
         }).
         error(function(data, status, headers, config) {
@@ -75,28 +78,28 @@ angular.module('tikrApp')
       }
     };
 
-    $scope.sendMessage = function(title, text, userID){
+    $scope.sendMessage = function(title, text, userID) {
       var newMessage = {
         userGithubID: userID,
         title: title,
         message: text
       };
 
-      messageService.create(newMessage).then(function () {
+      messageService.create(newMessage).then(function() {
         console.log('sent message');
-      }, function () {
+      }, function() {
         console.log('failed to send message');
       });
     };
 
-    $scope.sendMessageModal = function(user){
+    $scope.sendMessageModal = function(user) {
       var modalScope = $rootScope.$new();
       modalScope.messageTitle = '';
       modalScope.messageText = '';
       var modalClass = 'modal-default';
       modalScope.modal = {
         dismissable: true,
-        title: 'Sending Message to: '+user.name,
+        title: 'Sending Message to: ' + user.name,
         buttons: [{
           classes: 'btn-danger',
           text: 'Send',
@@ -121,17 +124,10 @@ angular.module('tikrApp')
       });
     };
 
-    $scope.setupChart = function(){
+    $scope.setupChart = function() {
       var data = [];
-      var langLegend = []
-
-      // $scope.languages retrieves languages mostly used by person on GitHub
-      _.each($scope.languages, function(percentage, lang){
-        // console.log('Value', percentage[1]);
-        // console.log('Key', lang);
-
-        langLegend.push(lang);
-        data.push([lang, percentage[1], 'test']);
+      _.each($scope.languages, function(val, key) {
+        data.push([key, val[1], 'test']);
       });
 
       var chart = c3.generate({
@@ -144,21 +140,7 @@ angular.module('tikrApp')
           // ],
 
           columns: data,
-            type : 'pie',
-            onclick: function (d, i) { console.log("onclick", Math.floor(d.value), i); },
-            // onmouseover: function (d, i) { console.log("onmouseover", Math.floor(d.value), i); },
-            // onmouseout: function (d, i) { console.log("onmouseout", d, i); }
-        },
-        axis: {
-          rotated: true,
-          x: {
-            max: 0,
-            min: 0,
-            type: 'category',
-            tick:{
-              multiline: false
-            }
-          }
+          type: 'donut',
         },
         pie: {
           width: 20,
@@ -170,8 +152,8 @@ angular.module('tikrApp')
 
     $scope.getUserProfile();
 
-    $scope.hasSkills = function(){
-      if ($scope.userProfile && $scope.userProfile.skills){
+    $scope.hasSkills = function() {
+      if ($scope.userProfile && $scope.userProfile.skills) {
         return true;
       } else {
         return false;

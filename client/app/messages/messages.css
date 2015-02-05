@@ -39,3 +39,11 @@
   width: 65%;
   min-width: 200px;
 }
+
+.pad-right {
+  margin-right: 10px;
+}
+
+.pad-left {
+  margin-left: 10px;
+}

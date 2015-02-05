@@ -11,6 +11,7 @@ var router = express.Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.get('/inbox', auth.isAuthenticated(), controller.inbox);
+router.get('/sent', auth.isAuthenticated(), controller.sent);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 
 // POST methods

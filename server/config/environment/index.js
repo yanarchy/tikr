@@ -4,7 +4,7 @@ var path = require('path');
 var _ = require('lodash');
 
 function requiredProcessEnv(name) {
-  if(!process.env[name]) {
+  if (!process.env[name]) {
     throw new Error('You must set the ' + name + ' environment variable');
   }
   return process.env[name];
@@ -42,10 +42,17 @@ var all = {
   },
 
   github: {
-    clientID:     process.env.GITHUB_ID || 'id',
+    clientID: process.env.GITHUB_ID || 'id',
     clientSecret: process.env.GITHUB_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/github/callback'
+    callbackURL: (process.env.GITHUB_DOMAIN || '') + '/auth/github/callback'
   },
+
+  linkedin: {
+    consumerKey: process.env.LINKEDIN_API_KEY || 'id',
+    consumerSecret: process.env.LINKEDIN_SECRET_KEY || 'secret',
+    callbackURL: (process.env.LINKEDIN_DOMAIN || '') + '/auth/linkedin/callback'
+
+  }
 
 };
 

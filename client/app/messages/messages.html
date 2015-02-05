@@ -2,19 +2,40 @@
 
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>Messages</h1>
+    <h1>GitLinked Messages</h1>
   </div>
 </header>
 
 <div class="container-fluid">
   <div id="messages" class="row">
 
+    <!-- Current Nav Title and search bar -->
+    <div class="col-md-12">
+
+      <div class="col-md-2">
+        <h1>{{pageTitle}}</h1><br>
+      </div>
+
+      <div class="col-md-10">
+        <br>
+        <div ng-if="pageTitle !== 'Compose'" class="input-group">
+          <label
+            for="searchText"
+            class="input-group-addon"
+            id="sizing-addon2">
+            Filter Messages:
+          </label>
+          <input
+            id="searchText"
+            class="form-control"
+            ng-model="search.$">
+        </div>
+      </div>
+
+    </div>
+
     <!-- Side nav bar -->
     <div class="col-md-2">
-
-      <button id="inbox-back" type="button" class="btn btn-default btn-md" ui-sref="messages.compose">
-        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Compose
-      </button>
       <div ng-include="'app/messages/components/sidebar.html'"></div>
     </div>
 
