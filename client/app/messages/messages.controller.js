@@ -37,13 +37,15 @@ angular.module('tikrApp')
 
     // Fetches a specific message.
     $scope.show = function(message) {
-      if (!message.read) $scope.newCount--;
-      messageService.update(message, {
-        read: true
-      }).then(function(doc) {
-        $scope.message = doc;
-        message.read = true;
-      });
+      if (!message.read) {
+        $scope.newCount--;
+        messageService.update(message, {
+          read: true
+        }).then(function(doc) {
+          $scope.message = doc;
+          message.read = true;
+        });
+      }
     };
 
     // Marks the message as 'starred' for the user.
