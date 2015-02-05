@@ -22,7 +22,7 @@ angular.module('tikrApp')
       'title': 'Starred',
       'sref': 'messages.starred',
       'link': '/messages/starred',
-      'badge': $scope.starred || 0
+      'badge': $scope.starCount || 0
     }];
 
     // Returns boolean of current state.
@@ -34,6 +34,10 @@ angular.module('tikrApp')
     $scope.getInbox = function() {
       messageService.getInbox().then(function(messages) {
         $scope.messages = messages;
+        $scope.starCount = 0;
+        for (var i = 0; i < messages.length; i++) {
+          if (!!messages[i].starred) $scope.starCount++;
+        }
       });
     };
 
@@ -60,8 +64,9 @@ angular.module('tikrApp')
       });
     };
 
-    // Prioritizes the message for the user.
+    // Marks the message as 'starred' for the user.
     $scope.star = function(message) {
+      !message.starred ? $scope.starCount++ : $scope.starCount--;
       messageService.update(message, {
         starred: !this.starred
       }).then(function(doc) {
@@ -97,7 +102,7 @@ angular.module('tikrApp')
       }
     );
 
-    // Load inbox for default view.
+    // Load inbox for initial messages view.
     $scope.getInbox();
 
   }]);
