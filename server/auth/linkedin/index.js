@@ -11,7 +11,7 @@ router.get('/', passport.authenticate('linkedin', {
 	session: false
 }))
 
-router.get('/callback', passport.authenticate('linkedin', {
+.get('/callback', passport.authenticate('linkedin', {
 	failureRedirect: '/signup',
 	session: false
 }), auth.setTokenCookie);
