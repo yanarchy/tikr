@@ -184,10 +184,6 @@ exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
 
-// exports.getReposForProfile = function(){
-
-// };
-
 exports.getUserProfile = function(req, res, next) {
 
   User.findOne({
@@ -202,7 +198,7 @@ exports.getUserProfile = function(req, res, next) {
         return res.send('Could not find that profile', 404);
       }
 
-      // Method Kevin
+      // Method get user information
       exports.getReposPromise(user.github, user.github.login)
       .then(function(newUser) {
         user.github = newUser;

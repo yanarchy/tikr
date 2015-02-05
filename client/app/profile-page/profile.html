@@ -20,7 +20,7 @@
           <div class="btn-group" id="threeButtons" role="group" aria-label="...">
             <button type="button" class='btn btn-default' ng-click='sendMessageModal(userProfile);'>Message</button>
             <button type="button" class="btn btn-default">Follow</button>
-            <button type="button" class="btn btn-default">Other</button>
+            <button type="button" class="btn btn-default"><a href="{{userProfile.github.blog}}">Website</a></button>
           </div>
 
         </li>
@@ -106,11 +106,11 @@
         <!-- start panel -->
         <div class="panel panel-default">
         
-          <div class="panel-heading"><h4>Repositories</h4></div>
-          <div class="panel-body" ng-repeat="github in kxprim">
+          <div><h4>Repositories</h4></div>
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="repo in userProfile.github.repos"><a href="{{repo.git_url}}">{{repo.name}}</a></img></li>
+            </ul>
             
-            <li>List here</li>
-            <li>{{newspost.title}}</li>
           </div>
 
           </div>
