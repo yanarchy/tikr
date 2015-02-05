@@ -124,7 +124,7 @@ angular.module('tikrApp')
     $scope.setupChart = function(){
       var data = [];
       var langLegend = []
-      
+
       // $scope.languages retrieves languages mostly used by person on GitHub
       _.each($scope.languages, function(percentage, lang){
         // console.log('Value', percentage[1]);
@@ -144,7 +144,7 @@ angular.module('tikrApp')
           // ],
 
           columns: data,
-            type : 'bar',
+            type : 'pie',
             onclick: function (d, i) { console.log("onclick", Math.floor(d.value), i); },
             // onmouseover: function (d, i) { console.log("onmouseover", Math.floor(d.value), i); },
             // onmouseout: function (d, i) { console.log("onmouseout", d, i); }
@@ -160,7 +160,7 @@ angular.module('tikrApp')
             }
           }
         },
-        bar: {
+        pie: {
           width: 20,
           zerobased: true,
           title: "Languages"

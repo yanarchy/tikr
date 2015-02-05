@@ -5,6 +5,7 @@
 #profilePic {
     display: block;
     max-width: 200px;
+    width: 95%;
     border-radius: 100px;
     margin-left: auto;
     margin-right: auto;
