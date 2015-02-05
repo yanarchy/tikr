@@ -1,8 +1,16 @@
 <div ng-include="'app/messages/components/inbox-nav.html'"></div>
 
 <div class="panel panel-default">
-  <p class="panel-body" ng-if="messages.length === 0">You have no messages in your inbox.</p>
-  <table ng-if="messages.length > 0" class="table table-striped inbox-display">
+
+  <p
+    class="panel-body"
+    ng-if="(messages | filter:search).length === 0">
+    You have no {{location.hash()}} messages.
+  </p>
+
+  <table
+    ng-if="(messages | filter:search).length > 0"
+    class="table table-striped inbox-display">
 
     <tr>
       <th class="inbox-from">From</th>
@@ -11,7 +19,7 @@
       <th class="inbox-preview">Message</th>
     </tr>
 
-    <tr ng-repeat="message in messages | filter:searchText">
+    <tr ng-repeat="message in messages | filter:search">
 
       <td
         class="inbox-from"

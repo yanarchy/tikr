@@ -9,7 +9,7 @@
       <th class="inbox-preview">Message</th>
     </tr>
 
-    <tr ng-repeat="message in sentMessages | filter:searchText">
+    <tr ng-repeat="message in sentMessages | filter:search">
 
       <td class="inbox-from" ng-click="show(message)">
         {{message.to}}

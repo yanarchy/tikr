@@ -3,7 +3,8 @@
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
     // Set $state on the scope to access it in the views.
-    $scope.$state = $state;
+    $scope.state = $state;
+    $scope.location = $location;
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
@@ -79,7 +80,9 @@ angular.module('tikrApp')
     var messageDirector = {
       '/inbox': {
         title: 'Inbox',
-        fetch: null
+        fetch: function() {
+          if (!$scope.search) $scope.filterInbox('new');
+        }
       },
       '/sent': {
         title: 'Sent',
@@ -105,7 +108,11 @@ angular.module('tikrApp')
     // If navigating to an inbox view, load previous hash (or new if undefined.)
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams, fromState, fromParams) {
-        if (toState.url === '/inbox') $location.hash(fromParams.hash || 'new');
+        if (toState.url === '/inbox') {
+          var target = fromParams.hash || 'new';
+          $location.hash(target);
+          $scope.filterInbox.bind(null, target);
+        }
       }
     );
 
