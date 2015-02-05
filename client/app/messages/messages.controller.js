@@ -2,7 +2,6 @@
 
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
-    $scope.inboxFilter = 'null';
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
 
@@ -51,19 +50,13 @@ angular.module('tikrApp')
       });
     };
 
-    // Filters inbox to only show new messages.
-    $scope.filterNew = function() {
-
-    };
-
-    // Filters inbox to only show starred messages.
-    $scope.filterStarred = function() {
-      //
-    };
-
-    // Clear message filters for inbox view.
-    $scope.clearFilter = function() {
-      //
+    // Filters inbox to only show specific messages.
+    $scope.filterInbox = function(filter) {
+      $scope.search = {};
+      if (filter) {
+        var set = filter === 'read' ? false : true;
+        $scope.search[filter] = set;
+      }
     };
 
     // Fetches a specific message.
@@ -117,8 +110,15 @@ angular.module('tikrApp')
       }
     );
 
+    // $scope.$on('$viewContentLoading',
+    //   function(event, viewConfig) {
+    //     if (toState.name === messages.inbox) $location.hash('new');
+    //   }
+    // );
+
     // Load inbox for initial messages view.
     $scope.getInbox();
     $scope.pageTitle = titles[$state.current.url];
+    $location.hash('new');
 
   }]);

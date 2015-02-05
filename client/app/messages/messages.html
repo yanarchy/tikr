@@ -11,16 +11,27 @@
 
     <!-- Current Nav Title and search bar -->
     <div class="col-md-12">
+
       <div class="col-md-2">
         <h1>{{pageTitle}}</h1><br>
       </div>
+
       <div class="col-md-10">
         <br>
         <div ng-if="pageTitle !== 'Compose'" class="input-group">
-          <label for="searchText" class="input-group-addon" id="sizing-addon2">Filter Messages:</label>
-          <input id="searchText" class="form-control" ng-model="searchText">
+          <label
+            for="searchText"
+            class="input-group-addon"
+            id="sizing-addon2">
+            Filter Messages:
+          </label>
+          <input
+            id="searchText"
+            class="form-control"
+            ng-model="search.$">
         </div>
       </div>
+
     </div>
 
     <!-- Side nav bar -->
