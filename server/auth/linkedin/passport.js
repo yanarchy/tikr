@@ -3,8 +3,8 @@ exports.setup = function(User, config) {
   var LinkedInStrategy = require('passport-linkedin').Strategy;
 
   passport.use(new LinkedInStrategy({
-      consumerKey: config.linkedin.clientID,
-      consumerSecret: config.linkedin.clientSecret,
+      consumerKey: config.linkedin.consumerKey,
+      consumerSecret: config.linkedin.consumerSecret,
       callbackURL: config.linkedin.callbackURL
     },
     function(token, tokenSecret, profile, done) {
@@ -14,22 +14,22 @@ exports.setup = function(User, config) {
         if (err) {
           return done(err);
         }
-        if (!user) {
-          user = new User({
-            name: profile.displayName,
-            username: profile.username,
-            role: 'user',
-            provider: 'linkedin',
-            linkedin: profile._json
-          });
-          user.save(function(err) {
-            if (err) return done(err);
-            user.getSkills(token);
-            return done(err, user);
-          });
-        } else {
-          return done(err, user);
-        }
+        // if (!user) {
+        //   user = new User({
+        //     name: profile.displayName,
+        //     username: profile.username,
+        //     role: 'user',
+        //     provider: 'linkedin',
+        //     linkedin: profile._json
+        //   });
+        //   user.save(function(err) {
+        //     if (err) return done(err);
+        //     user.getSkills(token);
+        //     return done(err, user);
+        //   });
+        // } else {
+        //   return done(err, user);
+        // }
       });
     }
   ));
