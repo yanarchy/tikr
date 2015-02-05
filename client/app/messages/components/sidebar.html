@@ -11,8 +11,16 @@
  -->
 
   <a
+    ui-sref="messages.compose"
+    class="ng-class: {active: isActive('/messages/compose')}; list-group-item">
+    <i class="glyphicon glyphicon-envelope pad-right" aria-hidden="true"></i>
+    Compose
+  </a>
+
+  <a
     ui-sref="messages.inbox"
     class="ng-class: {active: isActive('/messages/inbox')}; list-group-item">
+    <i class="glyphicon glyphicon-inbox pad-right" aria-hidden="true"></i>
     Inbox
     <span class="badge">{{messages.length}}</span>
   </a>
@@ -20,12 +28,14 @@
   <a
     ui-sref="messages.sent"
     class="ng-class: {active: isActive('/messages/sent')}; list-group-item">
+    <i class="glyphicon glyphicon-folder-open pad-right" aria-hidden="true"></i>
     Sent
   </a>
 
   <a
     ui-sref="messages.starred"
     class="ng-class: {active: isActive('/messages/starred')}; list-group-item">
+    <i class="glyphicon glyphicon-star pad-right" aria-hidden="true"></i>
     Starred
     <span class="badge">{{starred}}</span>
   </a>
