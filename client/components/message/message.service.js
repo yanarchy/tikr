@@ -6,7 +6,7 @@ angular.module('tikrApp')
     return {
 
       // Get the users messages.
-      inbox: function() {
+      getInbox: function() {
         var deffered = $q.defer();
         $http.get('/api/messages/inbox')
           .success(function(data) {
@@ -20,7 +20,7 @@ angular.module('tikrApp')
       },
 
       // Get messages that the user sent.
-      sent: function() {
+      getSent: function() {
         var deffered = $q.defer();
         $http.get('/api/messages/sent')
           .success(function(data) {
