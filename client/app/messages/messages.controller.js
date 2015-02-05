@@ -4,26 +4,6 @@ angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
-    var saveHash = $location.hash() || 'new';
-
-    // Defines the side menu properties.
-    // TODO: Refactor sidebar to populate with ng-repeat.
-    $scope.sidebar = [{
-      'title': 'Inbox',
-      'sref': 'messages.inbox',
-      'link': '/messages/inbox',
-      'badge': $scope.newCount || 0
-    }, {
-      'title': 'Sent',
-      'sref': 'messages.sent',
-      'link': '/messages/sent'
-    }];
-
-    // Returns boolean of current state or hash.
-    $scope.isActive = function(route) {
-      if (route[0] === '/') return route === $location.path();
-      else return route === $location.hash();
-    };
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
@@ -89,18 +69,17 @@ angular.module('tikrApp')
       });
     };
 
-    // Functions to load needed messages based on state.
-    // var fetchDirector = {
-    //   'messages': $scope.getInbox,
-    //   'messages.inbox': $scope.getInbox,
-    //   'messages.sent': $scope.getSent
-    // };
+    // Returns boolean of current state or hash.
+    $scope.isActive = function(route) {
+      if (route[0] === '/') return route === $location.path();
+      else return route === $location.hash();
+    };
 
-    //
+    // Functions to load needed items based on state.
     var messageDirector = {
       '/inbox': {
         title: 'Inbox',
-        fetch: $scope.getInbox
+        fetch: null
       },
       '/sent': {
         title: 'Sent',
@@ -108,20 +87,14 @@ angular.module('tikrApp')
       },
       '/compose': {
         title: 'Compose',
-        fetch: function() {
-          return;
-        }
+        fetch: null
       }
     };
 
     // On state change, if state is inbox, sent, or stared, fetch appropriate messages.
     $scope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
-        var elements = messageDirector[toState.url];
-        if (elements) {
-          $scope.pageTitle = elements.title;
-          elements.fetch();
-        }
+        if (messageDirector[toState.url]) loadContent(toState.url);
         // If navigating away from an inbox view, save the hash so it is displayed if user returns to inbox.
         if (fromState.url === '/inbox') {
           toParams.hash = $location.hash();
@@ -132,15 +105,22 @@ angular.module('tikrApp')
     // If navigating to an inbox view, load previous hash (or new if undefined.)
     $scope.$on('$stateChangeSuccess',
       function(event, toState, toParams, fromState, fromParams) {
-        if (toState.url === '/inbox') $location.hash(fromParams.hash);
+        if (toState.url === '/inbox') $location.hash(fromParams.hash || 'new');
       }
     );
 
-    // Load inbox for initial messages view.
-    $scope.getInbox();
-    // console.log($state.current.url);
-    // console.log(messageDirector[$state.current.url]);
-    $scope.pageTitle = messageDirector[$state.current.url].title;
-    $location.hash('new');
+    // Load initial messages view.
+    var loadContent = function(loadState) {
+      // If no loadState is provided, default to inbox#new.
+      loadState = loadState || '/inbox';
+      var elements = messageDirector[loadState];
+      if (elements) {
+        $scope.getInbox();
+        $scope.pageTitle = elements.title;
+        if (elements.fetch) elements.fetch();
+        console.log($scope.sentMessages);
+      }
+    };
+    loadContent($state.current.url);
 
   }]);
