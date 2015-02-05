@@ -14,22 +14,22 @@ exports.setup = function(User, config) {
         if (err) {
           return done(err);
         }
-        // if (!user) {
-        //   user = new User({
-        //     name: profile.displayName,
-        //     username: profile.username,
-        //     role: 'user',
-        //     provider: 'linkedin',
-        //     linkedin: profile._json
-        //   });
-        //   user.save(function(err) {
-        //     if (err) return done(err);
-        //     user.getSkills(token);
-        //     return done(err, user);
-        //   });
-        // } else {
-        //   return done(err, user);
-        // }
+        if (!user) {
+          user = new User({
+            name: profile.displayName,
+            username: profile.username,
+            role: 'user',
+            provider: 'linkedin',
+            linkedin: profile._json
+          });
+          user.save(function(err) {
+            if (err) return done(err);
+            console.log('hello');
+            return done(err, user);
+          });
+        } else {
+          return done(err, user);
+        }
       });
     }
   ));
