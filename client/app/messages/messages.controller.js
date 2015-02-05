@@ -2,7 +2,7 @@
 
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
-
+    $scope.inboxFilter = 'null';
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
 
@@ -17,16 +17,18 @@ angular.module('tikrApp')
       'title': 'Sent',
       'sref': 'messages.sent',
       'link': '/messages/sent'
-    }, {
-      'title': 'Starred',
-      'sref': 'messages.starred',
-      'link': '/messages/starred',
-      'badge': $scope.starCount || 0
     }];
 
-    // Returns boolean of current state.
+    var titles = {
+      '/inbox': 'Inbox',
+      '/sent': 'Sent',
+      '/compose': 'Compose'
+    };
+
+    // Returns boolean of current state or hash.
     $scope.isActive = function(route) {
-      return route === $location.path();
+      if (route[0] === '/') return route === $location.path();
+      else return route === $location.hash();
     };
 
     // Fetches a messages list that belongs to the authenticated user.
@@ -49,10 +51,19 @@ angular.module('tikrApp')
       });
     };
 
-    // Fetches list of starred messages.
-    // TODO: Refactor this to be a filter on inbox.
-    $scope.getStarred = function() {
-      // Filter inbox to only show starred messages.
+    // Filters inbox to only show new messages.
+    $scope.filterNew = function() {
+
+    };
+
+    // Filters inbox to only show starred messages.
+    $scope.filterStarred = function() {
+      //
+    };
+
+    // Clear message filters for inbox view.
+    $scope.clearFilter = function() {
+      //
     };
 
     // Fetches a specific message.
@@ -101,11 +112,13 @@ angular.module('tikrApp')
     // On state change, if state is inbox, sent, or stared, fetch appropriate messages.
     $scope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
+        if (titles[toState.url]) $scope.pageTitle = titles[toState.url];
         if (fetchDirector[toState.name]) fetchDirector[toState.name]();
       }
     );
 
     // Load inbox for initial messages view.
     $scope.getInbox();
+    $scope.pageTitle = titles[$state.current.url];
 
   }]);

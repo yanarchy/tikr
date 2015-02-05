@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs">
+  <li
+    role="presentation"
+    ng-class="{active: isActive('new')}"
+    ng-click="filterNew()">
+    <a href="#new">
+      New
+      <span class="badge pad-left">{{newCount}}</span>
+    </a>
+  </li>
+  <li
+    role="presentation"
+    ng-class="{active: isActive('starred')}"
+    ng-click="filterStarred()">
+    <a href="#starred">
+      Starred
+      <span class="badge pad-left">{{starCount}}</span>
+    </a>
+  </li>
+  <li
+    role="presentation"
+    ng-class="{active: isActive('all')}"
+    ng-click="clearFilter()">
+    <a href="#all">
+      All
+      <span class="badge pad-left">{{messages.length}}</span>
+    </a>
+  </li>
+</ul>
