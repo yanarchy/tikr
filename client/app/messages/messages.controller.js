@@ -96,8 +96,8 @@ angular.module('tikrApp')
       function(event, toState, toParams, fromState, fromParams) {
         if (messageDirector[toState.url]) loadContent(toState.url);
         // If navigating away from an inbox view, save the hash so it is displayed if user returns to inbox.
-        if (fromState.url === '/inbox') {
-          toParams.hash = $location.hash();
+        if (messageDirector[fromState.url]) {
+          toParams.hash = $location.hash() || fromParams.hash;
         }
       }
     );
@@ -118,7 +118,6 @@ angular.module('tikrApp')
         $scope.getInbox();
         $scope.pageTitle = elements.title;
         if (elements.fetch) elements.fetch();
-        console.log($scope.sentMessages);
       }
     };
     loadContent($state.current.url);
