@@ -2,7 +2,6 @@
 
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
-    $scope.starCount = 0;
 
     // Set $state on the scope to access it in the views.
     $scope.$state = $state;
@@ -13,7 +12,7 @@ angular.module('tikrApp')
       'title': 'Inbox',
       'sref': 'messages.inbox',
       'link': '/messages/inbox',
-      'badge': $scope.messages ? $scope.messages.length : 0
+      'badge': $scope.newCount || 0
     }, {
       'title': 'Sent',
       'sref': 'messages.sent',
@@ -35,8 +34,10 @@ angular.module('tikrApp')
       messageService.getInbox().then(function(messages) {
         $scope.messages = messages;
         $scope.starCount = 0;
+        $scope.newCount = 0;
         for (var i = 0; i < messages.length; i++) {
           if (!!messages[i].starred) $scope.starCount++;
+          if (!messages[i].read) $scope.newCount++;
         }
       });
     };
@@ -56,6 +57,7 @@ angular.module('tikrApp')
 
     // Fetches a specific message.
     $scope.show = function(message) {
+      $scope.newCount--;
       messageService.update(message, {
         read: true
       }).then(function(doc) {
@@ -66,9 +68,10 @@ angular.module('tikrApp')
 
     // Marks the message as 'starred' for the user.
     $scope.star = function(message) {
+      var starred = message.starred;
       !message.starred ? $scope.starCount++ : $scope.starCount--;
       messageService.update(message, {
-        starred: !this.starred
+        starred: !starred
       }).then(function(doc) {
         message.starred = !message.starred;
       });

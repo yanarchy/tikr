@@ -22,7 +22,7 @@ exports.index = function(req, res) {
 };
 
 /**
- * Updates the read property on the message
+ * Updates the read or starred property on the message
  */
 exports.update = function(req, res, next) {
   var message = req.body.message;
