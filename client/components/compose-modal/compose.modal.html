@@ -3,6 +3,7 @@
     type="button"
     class="close"
     data-dismiss="modal"
+    ng-click="close()"
     aria-hidden="true">
     &times;
   </button>
@@ -24,7 +25,7 @@
       <input
         id="messageTo"
         type="text"
-        ng-model="newMessage.to"
+        ng-model="messageTo"
         class="form-control"
         placeholder="GitHub Username"
         required>

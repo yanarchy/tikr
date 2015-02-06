@@ -6,20 +6,21 @@ angular.module('tikrApp')
       $modalInstance.close();
     };
 
+    // Modal for sending messages.
     $scope.reply = function() {
-      $scope.close();
-      // $state.transitionTo('messages.compose');
 
       var modalInstance = $modal.open({
-        templateUrl: 'app/components/compose-modal/compose.modal.html',
+        templateUrl: 'components/compose-modal/compose.modal.html',
         controller: 'ComposeModalCtrl',
         size: 'large',
         resolve: {
           message: function() {
-            return $scope.message;
+            return $scope.message.from;
           }
         }
       });
+
+      $scope.close();
     };
 
   });
