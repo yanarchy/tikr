@@ -29,6 +29,7 @@ angular.module('tikrApp')
         });
 
         $scope.setupChart();
+        $scope.reposChart();
 
         return;
       }).
@@ -95,16 +96,48 @@ angular.module('tikrApp')
       });
     };
 
-    $scope.helloWorld = function(){
+    $scope.reposChart = function(){
+      var data = [];
+      // Assign each repo and its stargazer value to an array
+      // _.each($scope.repositories, function(val, key){
+      //   // Need to associate a repo name to an integer
+      //   data.push([key, val[1], 'test']);
+      // });
+
+      // Generate graph
+      var chart = c3.generate({
+        bindto: "#reposChart",
+        data: {
+          columns: [
+            ['Repo1', 2],
+            ['Repo2', 1],
+            ['Repo3', 6],
+            ['Repo4', 3],
+            ['Repo5', 1],
+            ['Repo6', 1],
+            ['Repo7', 2],
+            ['Repo8', 3],
+            ['Repo9', 2],
+            ['Repo10', 2],
+          ],
+          type: 'bar'
+        },
+        bar: {
+          width: {
+            ratio: 0.95
+          }
+        }
+      });
     };
 
     $scope.setupChart = function() {
       var data = [];
       _.each($scope.languages, function(val, key) {
-        data.push([key, val[1], 'test']);
+        data.push([key, val[1]]);
       });
 
       var chart = c3.generate({
+        bindto: "#chart",
         data: {
 
           columns: data,
