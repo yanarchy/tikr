@@ -1,5 +1,5 @@
 angular.module('tikrApp')
-  .controller('ModalInstanceCtrl', function($scope, $modalInstance, message) {
+  .controller('ModalInstanceCtrl', function($scope, $state, $modalInstance, message) {
     $scope.message = message;
 
     $scope.close = function() {
@@ -7,11 +7,8 @@ angular.module('tikrApp')
     };
 
     $scope.reply = function() {
-      //
-    };
-
-    $scope.delete = function() {
-      //
+      $scope.close();
+      $state.transitionTo('messages.compose');
     };
 
   });
