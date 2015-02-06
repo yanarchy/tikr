@@ -227,5 +227,4 @@ exports.postNewSkill = function(req, res, next) {
       }
     }
   );
-}
-;
+};
