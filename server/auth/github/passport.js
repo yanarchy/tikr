@@ -3,15 +3,11 @@ exports.setup = function(User, config) {
   var GitHubStrategy = require('passport-github').Strategy;
   var githubKeys;
 
-  try {
-    githubKeys = require('../../config/local.env.js');
-  } catch(e) {
-    //do nothing
-  }
 
   passport.use(new GitHubStrategy({
-      clientID: (process.env.GITHUB_ID || githubKeys.GITHUB_ID),
-      clientSecret: (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET)
+      clientID: config.github.clientID,
+      clientSecret: config.github.clientSecret,
+      callbackURL: config.github.callbackURL
     },
     function(token, tokenSecret, profile, done) {
       User.findOne({
