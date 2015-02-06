@@ -53,7 +53,6 @@ angular.module('tikrApp')
           }
         }
       });
-
     };
 
     // Marks a message as read, sends update request to server.
@@ -61,6 +60,20 @@ angular.module('tikrApp')
       $scope.newCount--;
       messageService.update(message, {
         read: true
+      });
+    };
+
+    // Modal for sending messages.
+    $scope.sendMessageModal = function(messageTo) {
+      var modalInstance = $modal.open({
+        templateUrl: 'components/compose-modal/compose.modal.html',
+        controller: 'ComposeModalCtrl',
+        size: 'large',
+        resolve: {
+          message: function() {
+            return messageTo;
+          }
+        }
       });
     };
 
@@ -72,19 +85,6 @@ angular.module('tikrApp')
         starred: !starred
       }).then(function(doc) {
         message.starred = !message.starred;
-      });
-    };
-
-    // Creates a new private message to a user.
-    // Messages should be sent with the following properties:
-    // to (github login), from (string: github login), title (string)
-    $scope.create = function(newMessage) {
-      // TODO: Notify user that the message was sent or not.
-      messageService.create(newMessage).then(function(doc) {
-        $scope.messages.push(doc);
-        $state.transitionTo('messages.inbox');
-      }, function() {
-        $state.transitionTo('messages.compose');
       });
     };
 

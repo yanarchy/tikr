@@ -1,0 +1,88 @@
+<div class="modal-header">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal"
+    ng-click="close()"
+    aria-hidden="true">
+    &times;
+  </button>
+
+  <h3 class="modal-title">Compose New Message</h3>
+</div>
+
+<form name="newMessage" ng-submit="send(newMessage)" validate>
+
+  <div class="modal-body">
+    
+    <div class="input-group" style="width:100%">
+      <label 
+        for="messageTo" 
+        class="input-group-addon"
+        style="width:85px">
+        <span class="pull-left">To</span>
+      </label>
+      <input
+        id="messageTo"
+        type="text"
+        ng-model="messageTo"
+        class="form-control"
+        placeholder="GitHub Username"
+        required>
+    </div><br>
+    
+    <div class="input-group" style="width:100%">
+      <label 
+        for="messageSubject" 
+        class="input-group-addon"
+        style="width:85px">
+        <span class="pull-left">Subject</span>
+      </label>
+      <input
+        id="messageSubject"
+        type="text"
+        ng-model="newMessage.title"
+        class="form-control"
+        placeholder="Message Subject"
+        required>
+    </div><br>
+    
+    <div class="input-group" style="width:100%">
+      <label 
+        for="messageContent"
+        class="input-group-addon"
+        style="width:85px">
+        <span class="pull-left">Message</span>
+      </label>
+      <textarea
+        id="messageContent"
+        type="text"
+        ng-model="newMessage.message"
+        class="form-control"
+        rows="10"
+        placeholder="Message Content"
+        required>
+      </textarea>
+    </div>
+
+  </div> <!-- End message body -->
+
+  <div class="modal-footer">
+
+    <button
+      type="button"
+      ng-click="close()"
+      class="btn btn-default pull-left"
+      data-dismiss="modal">
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      ng-click="send()"
+      class="btn btn-primary pull-right">
+      Send
+    </button>
+  </div>
+
+</form>
