@@ -1,19 +1,22 @@
-  <div class="modal-header">
-    <button
-      type="button"
-      class="close"
-      data-dismiss="modal"
-      aria-hidden="true">
-      &times;
-    </button>
+<div class="modal-header">
+  <button
+    type="button"
+    class="close"
+    data-dismiss="modal"
+    aria-hidden="true">
+    &times;
+  </button>
 
-    <h4 class="modal-title">{{message.title}}</h4>
-    <p>From: <a ng-href="/profiles/{{message.from}}">{{message.from}}</a></p>
-  </div>
+  <h4 class="modal-title">{{message.title}}</h4>
+</div>
 
-  <div class="modal-body" ng-bind-html="message.content">
-    <h4>Body</h4>
-    <p>{{message.content}}</p>
+<div class="modal-header">
+  <p>From: <a ng-href="/profiles/{{message.from}}" ng-click="close()">{{message.from}}</a></p>
+</div>
+
+<div class="modal-body" ng-bind-html="message.content">
+  <h4>Body</h4>
+  <p>{{message.content}}</p>
 </div>
 
 <div class="modal-footer">
