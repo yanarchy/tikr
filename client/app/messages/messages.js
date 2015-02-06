@@ -15,10 +15,6 @@ angular.module('tikrApp')
         url: '/inbox',
         templateUrl: 'app/messages/views/inbox.html'
       })
-      .state('messages.message', {
-        url: '/:id',
-        templateUrl: 'app/messages/views/message.html'
-      })
       .state('messages.compose', {
         url: '/compose',
         templateUrl: 'app/messages/views/compose.html'
@@ -30,6 +26,10 @@ angular.module('tikrApp')
       .state('messages.starred', {
         url: '/starred',
         templateUrl: 'app/messages/views/starred.html'
+      })
+      .state('messages.message', {
+        url: '/:id',
+        templateUrl: 'app/messages/views/message.html'
       });
 
   });

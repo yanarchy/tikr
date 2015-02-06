@@ -39,19 +39,6 @@ var all = {
         safe: true
       }
     }
-  },
-
-  github: {
-    clientID: process.env.GITHUB_ID || 'id',
-    clientSecret: process.env.GITHUB_SECRET || 'secret',
-    callbackURL: (process.env.GITHUB_DOMAIN || '') + '/auth/github/callback'
-  },
-
-  linkedin: {
-    consumerKey: process.env.LINKEDIN_API_KEY || 'id',
-    consumerSecret: process.env.LINKEDIN_SECRET_KEY || 'secret',
-    callbackURL: (process.env.LINKEDIN_DOMAIN || '') + '/auth/linkedin/callback'
-
   }
 
 };
