@@ -64,14 +64,14 @@ angular.module('tikrApp')
     };
 
     // Modal for sending messages.
-    $scope.sendMessageModal = function() {
+    $scope.sendMessageModal = function(messageTo) {
       var modalInstance = $modal.open({
         templateUrl: 'components/compose-modal/compose.modal.html',
         controller: 'ComposeModalCtrl',
         size: 'large',
         resolve: {
           message: function() {
-            return $scope.message;
+            return messageTo;
           }
         }
       });
