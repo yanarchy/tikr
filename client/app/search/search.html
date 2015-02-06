@@ -31,7 +31,7 @@
                    reset-search-input="false"
                    style="width: 300px;"
                    on-select="fetchUsers($item)">
-          <ui-select-match placeholder="Search by user...">{{$select.selected}}</ui-select-match>
+          <ui-select-match placeholder="Search by language...">{{$select.selected}}</ui-select-match>
           <ui-select-choices repeat="entry in languages track by $index"
                              refresh="refreshTypeahead($select.search)"
                              refresh-delay="0">
