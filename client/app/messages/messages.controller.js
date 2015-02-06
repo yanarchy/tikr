@@ -5,6 +5,9 @@ angular.module('tikrApp')
     // Set $state on the scope to access it in the views.
     $scope.state = $state;
     $scope.location = $location;
+    $scope.search = $scope.search || {
+      'read': false
+    };
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
@@ -143,5 +146,10 @@ angular.module('tikrApp')
       }
     };
     loadContent($state.current.url);
+
+    // Check for new messages every 5 seconds.
+    setInterval(function() {
+      $scope.getInbox();
+    }, 5000);
 
   });

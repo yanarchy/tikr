@@ -2,12 +2,6 @@
 
 <div class="panel panel-default">
 
-  <p
-    class="panel-body"
-    ng-if="(messages | filter:search).length === 0">
-    You have no {{location.hash()}} messages.
-  </p>
-
   <table
     ng-if="(messages | filter:search).length > 0"
     class="table table-striped inbox-display">
@@ -56,4 +50,11 @@
     </tr>
 
   </table>
+
+  <p
+    class="panel-body"
+    ng-if="(messages | filter:search).length === 0">
+    You have no {{location.hash()}} messages.
+  </p>
+  
 </div>
