@@ -11,8 +11,4 @@ angular.module('tikrApp')
       $state.transitionTo('messages.compose');
     };
 
-    $scope.delete = function() {
-      //
-    };
-
   });
