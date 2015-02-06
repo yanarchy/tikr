@@ -6,12 +6,12 @@
   </div>
 </header> -->
 
-<div class="container">
+<div class="container-fluid">
   
-  <div class="row">
-
-    <!-- General starts -->
-    <div class="border col-xs-3" id="general">
+  <div class="row-fluid">
+    
+    <!-- Left starts -->
+    <div class="col-md-3" id="left">
       <ul class="list-group">
         <li class="list-group-item"><img id="profilePic" ng-src="{{userProfile.github.avatar_url}}"></li>
         <li class="list-group-item"><h4>{{'@'+userProfile.github.login}}</h4></li>
@@ -26,51 +26,15 @@
         </li>
         <li class="list-group-item">Followers: {{userProfile.github.followers}}</li>
         <li class="list-group-item">Following: {{userProfile.github.following}}</li>
+        <li class="list-group-item">Hireable: 
+          <span>
+              {{userProfile.github.hireable ? 'Yes' : 'No'}}
+          </span>
+        </li>
+
       </ul>
-    </div>
-    <!-- General ends -->
 
-    <!-- Languages start -->
-    <div class="col-xs-6" id="languages">
-      <!-- start panel -->
-      <div class="panel panel-default">
-        <div class="panel-title">Languages</div>
-        <div class="panel-body">
-          <div id='chart'></div>
-        </div>
-      </div>
-      <!-- end panel -->
-    </div>
-    <!-- Languages end -->
-  
-    <!-- Repos start -->
-    <div class="col-xs-3" id="languages">
-      <!-- start panel -->
-      <div class="panel panel-default">
-        
-        <div><h4>Public Repositories</h4></div>
-        <ul class="list-group">
-          <li class="list-group-item" ng-repeat="repo in userProfile.github.repos"><a href="{{repo.git_url}}">{{repo.name}}</a></img></li>
-        </ul>
-      </div>
-      <!-- end panel -->
-    </div>
-    <!-- Repos ends -->
-
-     <!-- Repos start -->
-    <div class="col-xs-3" id="languages">
-      <!-- start panel -->
-      <div class="panel panel-default">
-        
-        <div class="panel"><h4>More graph</h4></div>
-        <div class="panel-body">Stuff</div>
-      </div>
-      <!-- end panel -->
-    </div>
-    <!-- Repos ends -->
-
-    <!-- Skills start -->
-    <div class="col-xs-3" id="skills">
+      <!-- Skills start -->
       <div class="panel panel-default">
 
         <div class="panel"><h4>Skills</h4></div>
@@ -81,7 +45,7 @@
           <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
           <!--TODO: fix this behavior when user is not logged in -->
           <h1 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">You haven't added any skills yet</h1>
-          <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet :-(</h1>
+          <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet</h1>
 
           <form ng-show="showFormToAddSkills" class="form" name="form" ng-submit="addASkill(form)" novalidate>
             <div class="form-group">
@@ -103,15 +67,56 @@
             </div>
           </form>
 
-          <ul class="nav nav-tabs nav-stacked col-md-4 col-xs-4 col-sm-6" ng-repeat="skill in userProfile.skills">
+          <ul class="nav nav-tabs nav-stacked col-md-4 col-md-4 col-sm-6" ng-repeat="skill in userProfile.skills">
             <li><a target="_blank" ng-href="{{skill.githublink}}">{{skill.skillname}}</a></li>
           </ul>
 
         </div>
       </div>
-    </div>
-    <!-- Skills end -->
+      <!-- Skills end -->
 
+     </div>
+    <!-- Left ends -->
+
+    <!-- Middle starts -->
+    <div class="col-md-6" id="middle">
+      <!-- start panel -->
+      <div class="panel panel-default">
+        <div class="panel"><h4>Languages</h4></div>
+        <div class="panel-body">
+          <div id='chart'></div>
+        </div>
+      </div>
+      <!-- end panel -->
+
+      <!-- start panel -->
+      <div class="panel panel-default">
+        <div class="panel"><h4>Graph</h4></div>
+        <div class="panel-body">
+          <div id='graph'></div>
+        </div>
+      </div>
+      <!-- end panel -->
+
+    </div>
+    <!-- Middle ends -->
+
+    <!-- Right starts -->
+    <div class="col-md-3" id="right">
+      <!-- Repos start -->
+      <div class="panel panel-default">
+        
+        <div><h4>Public Repositories</h4></div>
+        <ul class="list-group">
+          <!-- Organise repo list by size -->
+          <li class="list-group-item" ng-repeat="repo in userProfile.github.repos | orderBy:repos">
+            <a href="{{repo.git_url}}">{{repo.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Repos ends -->
+    </div>
+    <!-- Right ends -->
 
   </div>
   <!-- End of row -->

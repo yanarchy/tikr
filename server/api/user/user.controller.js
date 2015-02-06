@@ -95,11 +95,13 @@ exports.changePassword = function(req, res, next) {
   });
 };
 
-exports.getReposPromise = function(user, username) {
+// numRepos gives the number of repos showed about a user
+exports.getReposPromise = function(user, username, numRepos) {
+  numRepos = numRepos || "12";
   return new Promise(function(resolve, reject) {
     var repoOptions = {
       url: user.repos_url + "?client_id=" + (process.env.GITHUB_ID || githubKeys.GITHUB_ID)
-      + "&client_secret=" + (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET) + "&page=1&per_page=3",
+      + "&client_secret=" + (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET) + "&page=1&per_page=" + numRepos,
       headers: {
         'User-Agent': username
       }

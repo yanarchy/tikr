@@ -124,6 +124,9 @@ angular.module('tikrApp')
       });
     };
 
+    $scope.helloWorld = function(){
+    };
+
     $scope.setupChart = function() {
       var data = [];
       _.each($scope.languages, function(val, key) {
@@ -133,14 +136,11 @@ angular.module('tikrApp')
       var chart = c3.generate({
         data: {
 
-          // Example:
-          // columns: [
-          //   ['data1',40, 30, 200, 100, 400, 150, 250, 50, 100, 250,67,190,48,123,76,54,254],
-          //   ['x','Travel and Hospitality','Life Science and Pharma', 'Saas and Cloud', 'Hi-tech Manufacturing', 'Software', 'Business Services', 'Govt/Public Sector', 'Energy', 'Manufacturing', 'Healthcare','Media','Internet','Retail','Biotech','Automobile','Consumer Goods','Financial Services']
-          // ],
-
           columns: data,
           type: 'pie',
+        },
+        legend: {
+                position: 'right'
         },
         pie: {
           width: 20,
@@ -148,6 +148,7 @@ angular.module('tikrApp')
           title: "Languages"
         }
       });
+
     };
 
     $scope.getUserProfile();
