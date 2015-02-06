@@ -3,32 +3,8 @@
 angular.module('tikrApp')
   .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
     // Set $state on the scope to access it in the views.
-    $scope.$state = $state;
-
-    // Defines the side menu properties.
-    // TODO: Refactor sidebar to populate with ng-repeat.
-    $scope.sidebar = [{
-      'title': 'Inbox',
-      'sref': 'messages.inbox',
-      'link': '/messages/inbox',
-      'badge': $scope.newCount || 0
-    }, {
-      'title': 'Sent',
-      'sref': 'messages.sent',
-      'link': '/messages/sent'
-    }];
-
-    var titles = {
-      '/inbox': 'Inbox',
-      '/sent': 'Sent',
-      '/compose': 'Compose'
-    };
-
-    // Returns boolean of current state or hash.
-    $scope.isActive = function(route) {
-      if (route[0] === '/') return route === $location.path();
-      else return route === $location.hash();
-    };
+    $scope.state = $state;
+    $scope.location = $location;
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
@@ -61,7 +37,7 @@ angular.module('tikrApp')
 
     // Fetches a specific message.
     $scope.show = function(message) {
-      $scope.newCount--;
+      if (!message.read) $scope.newCount--;
       messageService.update(message, {
         read: true
       }).then(function(doc) {
@@ -94,31 +70,63 @@ angular.module('tikrApp')
       });
     };
 
-    // Functions to load needed messages based on state.
-    var fetchDirector = {
-      'messages': $scope.getInbox,
-      'messages.inbox': $scope.getInbox,
-      'messages.sent': $scope.getSent,
-      'messages.starred': $scope.getStarred
+    // Returns boolean of current state or hash.
+    $scope.isActive = function(route) {
+      if (route[0] === '/') return route === $location.path();
+      else return route === $location.hash();
+    };
+
+    // Functions to load needed items based on state.
+    var messageDirector = {
+      '/inbox': {
+        title: 'Inbox',
+        fetch: function() {
+          if (!$scope.search) $scope.filterInbox('new');
+        }
+      },
+      '/sent': {
+        title: 'Sent',
+        fetch: $scope.getSent
+      },
+      '/compose': {
+        title: 'Compose',
+        fetch: null
+      }
     };
 
     // On state change, if state is inbox, sent, or stared, fetch appropriate messages.
     $scope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams) {
-        if (titles[toState.url]) $scope.pageTitle = titles[toState.url];
-        if (fetchDirector[toState.name]) fetchDirector[toState.name]();
+        if (messageDirector[toState.url]) loadContent(toState.url);
+        // If navigating away from an inbox view, save the hash so it is displayed if user returns to inbox.
+        if (messageDirector[fromState.url]) {
+          toParams.hash = $location.hash() || fromParams.hash;
+        }
       }
     );
 
-    // $scope.$on('$viewContentLoading',
-    //   function(event, viewConfig) {
-    //     if (toState.name === messages.inbox) $location.hash('new');
-    //   }
-    // );
+    // If navigating to an inbox view, load previous hash (or new if undefined.)
+    $scope.$on('$stateChangeSuccess',
+      function(event, toState, toParams, fromState, fromParams) {
+        if (toState.url === '/inbox') {
+          var target = fromParams.hash || 'new';
+          $location.hash(target);
+          $scope.filterInbox.bind(null, target);
+        }
+      }
+    );
 
-    // Load inbox for initial messages view.
-    $scope.getInbox();
-    $scope.pageTitle = titles[$state.current.url];
-    $location.hash('new');
+    // Load initial messages view.
+    var loadContent = function(loadState) {
+      // If no loadState is provided, default to inbox#new.
+      loadState = loadState || '/inbox';
+      var elements = messageDirector[loadState];
+      if (elements) {
+        $scope.getInbox();
+        $scope.pageTitle = elements.title;
+        if (elements.fetch) elements.fetch();
+      }
+    };
+    loadContent($state.current.url);
 
   }]);

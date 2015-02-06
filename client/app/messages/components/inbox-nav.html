@@ -3,7 +3,7 @@
   <li
     role="presentation"
     ng-class="{active: isActive('new')}"
-    ng-click="filterMessages('read')">
+    ng-click="filterInbox('read')">
     <a href="#new">
       New
       <span class="badge pad-left">{{newCount}}</span>
@@ -13,7 +13,7 @@
   <li
     role="presentation"
     ng-class="{active: isActive('starred')}"
-    ng-click="filterMessages('starred')">
+    ng-click="filterInbox('starred')">
     <a href="#starred">
       Starred
       <span class="badge pad-left">{{starCount}}</span>
@@ -23,7 +23,7 @@
   <li
     role="presentation"
     ng-class="{active: isActive('all')}"
-    ng-click="filterMessages()">
+    ng-click="filterInbox()">
     <a href="#all">
       All
       <span class="badge pad-left">{{messages.length}}</span>
