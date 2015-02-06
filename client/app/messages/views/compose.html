@@ -1,32 +1,38 @@
-<div ng-include="'app/messages/components/back-to-inbox-button.html'"></div>
-
 <div class="well">
-  <form name="newMessage" ng-submit="create(newMessage)" novalidate>
+  <form name="newMessage" ng-submit="create(newMessage)" validate>
+
     <div class="form-group">
       <label for="to">To</label>
       <input
         type="text"
         ng-model="newMessage.to"
         class="form-control"
-        placeholder="MVP stage. Always set to send a private message to Richard VanBreemen." disabled>
+        placeholder="Enter a user's GitHub username"
+        required>
     </div>
+
     <div class="form-group">
-      <label for="title">Title</label>
+      <label for="title">Subject</label>
       <input
         type="text"
         ng-model="newMessage.title"
         class="form-control"
-        placeholder="Give a title to your private message">
+        placeholder="Give a title to your private message"
+        required>
     </div>
+
     <div class="form-group">
       <label for="message">Message</label>
       <textarea
         ng-model="newMessage.message"
         class="form-control"
         rows="10"
-        placeholder="Enter your message here to the user">
+        placeholder="Enter your message here to the user"
+        required>
       </textarea>
     </div>
+
     <button class="btn btn-danger" type="submit">Send</button>
+
   </form>
 </div>

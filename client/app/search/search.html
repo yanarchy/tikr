@@ -13,7 +13,7 @@
             <li ng-repeat="item in object.buckets">
               <a href data-ng-click="doSearchByFilter(facet, item.value)" ng-show="item.value">
                 <input type="checkbox" ng-model="checked[item.value]">
-                <span ng-bind-html="item.value | trust" class="facetText"></span>
+                <span ng-bind-html="item.value" class="facetText"></span>
                 ({{item.count | number}})
               </a>
             </li>
@@ -53,7 +53,8 @@
       <div class="row-fluid main-section" style="min-height:500px" ng-if="users.length > 0 && searchStarted">
         <div ng-bind="(data.total_count ? (data.total_count | number) : 0) + ' results found'"></div>
 
-        <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'">
+        <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'"
+             dir-paginate="user in users | itemsPerPage: 10 track by $index" total-items="(data.total_count || 0)">
 
           <div class="container">
             <a href="{{user.html_url}}" target="_blank">
@@ -84,6 +85,7 @@
           </div>
 
         </div>
+
         <!--pagination-->
         <dir-pagination-controls on-page-change="fetchUsers(selected, newPageNumber)"
                                  template-url="components/pagination/dirPagination.tpl.html">
