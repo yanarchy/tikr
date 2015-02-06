@@ -5,26 +5,31 @@ angular.module('tikrApp')
     $scope.users = [];
     $scope.searchStarted = false;
     $scope.selected = 'javascript';
+    var user = Auth.getCurrentUser();
 
     // returns a promise
     $scope.fetchUsers = function(language, pageNumber) {
       $scope.selected = language;
-      User.search({
-        skill: language,
-        username: $scope.TEST_USER || Auth.getCurrentUser().github.login,
-        pageNumber: pageNumber
-      }, function(data) {
-        $scope.searchStarted = true;
-        $scope.data = data[0];
-        $scope.users = $scope.data.items;
-      });
+
+      user.$promise
+        .then(function(user){
+          User.search({
+            skill: language,
+            username: $scope.TEST_USER || user.github.login,
+            pageNumber: pageNumber
+          }, function(data) {
+            $scope.searchStarted = true;
+            $scope.data = data[0];
+            $scope.users = $scope.data.items;
+          });
+        });
     };
 
     $scope.entry = {};
-    $scope.languages = [];
     $scope.refreshTypeahead = function(input) {
-      $scope.languages = [];
+
       $http.get('/api/languages').success(function(data) {
+        $scope.languages = [];
         data.forEach(function(language) {
           $scope.languages.push(language.Name);
         });
