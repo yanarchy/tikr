@@ -7,6 +7,8 @@ angular.module('tikrApp')
     $scope.currentUsername = $stateParams.username;
     $scope.showFormToAddSkills = false;
 
+    // TODO: Move server request logic to appropriate service in client/components/auth.
+    // Server requests should be processed in the auth or user service, not directly in these controllers.
     $scope.getUserProfile = function() {
       var githubUsername = $stateParams.username;
       var url = 'api/users/profiles/' + githubUsername;
@@ -42,9 +44,7 @@ angular.module('tikrApp')
     $scope.isLoggedInAsCurrentUser = function() {
       var currentUserPage = $stateParams.username;
       var loggedInUser = Auth.getCurrentUser();
-      //console.log(loggedInUser);
       if (loggedInUser.github && loggedInUser.github.login) {
-        //console.log("LOGGING LINE 51", loggedInUser.github.login, currentUserPage);
         if (loggedInUser.github.login === currentUserPage) {
           return true;
         }
@@ -56,6 +56,8 @@ angular.module('tikrApp')
       $scope.showFormToAddSkills = true;
     };
 
+    // TODO: Move server request logic to appropriate service in client/components/auth.
+    // Server requests should be processed in the auth or user service, not directly in these controllers.
     $scope.addASkill = function(formdata) {
       $scope.showFormToAddSkills = false;
       var newSkillName = $scope.skillname;
