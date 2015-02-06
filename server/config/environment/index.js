@@ -41,7 +41,7 @@ var all = {
     consumerSecret: process.env.LINKEDIN_SECRET_KEY || 'secret',
     callbackURL: (process.env.LINKEDIN_DOMAIN || '') + '/auth/linkedin/callback'
 
-  }
+  },
 
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
