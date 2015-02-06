@@ -22,6 +22,8 @@ module.exports = function(config) {
       'client/bower_components/angular-ui-router/release/angular-ui-router.js',
       'client/bower_components/angular-ui-select/dist/select.js',
       'client/bower_components/angular-ui-select/dist/select.css',
+      'client/bower_components/angular-utils-pagination/dirPagination.js',
+      'client/bower_components/angular-utils-pagination/dirPagination.tpl.html',
       'client/app/app.js',
       'client/app/**/*.js',
       'client/app/**/*.coffee',

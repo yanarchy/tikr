@@ -4,12 +4,15 @@ angular.module('tikrApp')
   .controller('SearchCtrl', function($scope, $http, $q, User, Auth) {
     $scope.users = [];
     $scope.searchStarted = false;
+    $scope.selected = 'javascript';
 
     // returns a promise
-    $scope.fetchUsers = function(language) {
+    $scope.fetchUsers = function(language, pageNumber) {
+      $scope.selected = language;
       User.search({
         skill: language,
-        username: $scope.TEST_USER || Auth.getCurrentUser().github.login
+        username: $scope.TEST_USER || Auth.getCurrentUser().github.login,
+        pageNumber: pageNumber
       }, function(data) {
         $scope.searchStarted = true;
         $scope.data = data[0];
@@ -48,5 +51,5 @@ angular.module('tikrApp')
     };
 
     //init
-    $scope.fetchUsers('javascript');
+    $scope.fetchUsers($scope.selected);
   });

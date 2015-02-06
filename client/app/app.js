@@ -6,7 +6,8 @@ angular.module('tikrApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'ui.select'
+  'ui.select',
+  'angularUtils.directives.dirPagination'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

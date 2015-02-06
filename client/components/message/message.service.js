@@ -33,7 +33,7 @@ angular.module('tikrApp')
         return deffered.promise;
       },
 
-      // Updates the properties on the message.
+      // Updates a single property on a specific message.
       update: function(message, property) {
         var deffered = $q.defer();
         $http.put('/api/messages/update', {

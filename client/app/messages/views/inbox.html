@@ -1,29 +1,35 @@
-<h1>Inbox</h1>
-<br>
+<div ng-include="'app/messages/components/inbox-nav.html'"></div>
+
 <div class="panel panel-default">
-  <p class="panel-body" ng-if="messages.length === 0">You have no messages in your inbox.</p>
-  <table ng-if="messages.length > 0" class="table table-striped inbox-display">
+
+  <p
+    class="panel-body"
+    ng-if="(messages | filter:search).length === 0">
+    You have no {{location.hash()}} messages.
+  </p>
+
+  <table
+    ng-if="(messages | filter:search).length > 0"
+    class="table table-striped inbox-display">
+
     <tr>
       <th class="inbox-from">From</th>
       <th class="inbox-flags">Flags</th>
       <th class="inbox-subject">Subject</th>
       <th class="inbox-preview">Message</th>
     </tr>
-    <tr ng-repeat="message in messages">
-      <td class="inbox-from" ng-click="show(message)">
+
+    <tr ng-repeat="message in messages | filter:search">
+
+      <td
+        class="inbox-from"
+        ng-click="show(message)">
         {{message.from}}
       </td>
+
       <td class="inbox-flags">
         <span
-          ng-if="!message.starred"
-          class="glyphicon glyphicon-star-empty"
-          aria-hidden="true"
-          ng-click="star(message)">
-        </span>
-
-        <span
-          ng-if="message.starred"
-          class="glyphicon glyphicon-star"
+          ng-class="message.starred ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"
           aria-hidden="true"
           ng-click="star(message)">
         </span>
@@ -34,12 +40,20 @@
           New
         </span>
       </td>
-      <td class="inbox-subject" ng-click="show(message)">
+
+      <td
+        class="inbox-subject"
+        ng-click="show(message)">
         {{message.title}}
       </td>
-      <td class="inbox-preview" ng-click="show(message)">
+
+      <td
+        class="inbox-preview"
+        ng-click="show(message)">
         {{message.content}}
       </td>
+
     </tr>
+
   </table>
 </div>

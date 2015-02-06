@@ -1,7 +1,6 @@
-<h1>New Message</h1>
-<br>
 <div class="well">
   <form name="newMessage" ng-submit="create(newMessage)" validate>
+
     <div class="form-group">
       <label for="to">To</label>
       <input
@@ -11,8 +10,9 @@
         placeholder="Enter a user's GitHub username"
         required>
     </div>
+
     <div class="form-group">
-      <label for="title">Title</label>
+      <label for="title">Subject</label>
       <input
         type="text"
         ng-model="newMessage.title"
@@ -20,6 +20,7 @@
         placeholder="Give a title to your private message"
         required>
     </div>
+
     <div class="form-group">
       <label for="message">Message</label>
       <textarea
@@ -30,6 +31,8 @@
         required>
       </textarea>
     </div>
+
     <button class="btn btn-danger" type="submit">Send</button>
+
   </form>
 </div>
