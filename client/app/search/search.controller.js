@@ -23,8 +23,9 @@ angular.module('tikrApp')
     $scope.entry = {};
     $scope.languages = [];
     $scope.refreshTypeahead = function(input) {
-      $scope.languages = [];
+      
       $http.get('/api/languages').success(function(data) {
+        $scope.languages = [];
         data.forEach(function(language) {
           $scope.languages.push(language.Name);
         });
