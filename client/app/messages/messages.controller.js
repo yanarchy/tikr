@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
+  .controller('MessageCtrl', function($scope, $state, $location, $modal, $log, messageService) {
     // Set $state on the scope to access it in the views.
     $scope.state = $state;
     $scope.location = $location;
@@ -35,17 +35,30 @@ angular.module('tikrApp')
       }
     };
 
-    // Fetches a specific message.
+    // Displays a specific message.
     $scope.show = function(message) {
-      if (!message.read) {
-        $scope.newCount--;
-        messageService.update(message, {
-          read: true
-        }).then(function(doc) {
-          $scope.message = doc;
-          message.read = true;
-        });
-      }
+      if (!message.read) markAsRead(message);
+      $scope.message = message;
+
+      var modalInstance = $modal.open({
+        templateUrl: 'app/messages/components/message.html',
+        controller: 'ModalInstanceCtrl',
+        size: 'large',
+        resolve: {
+          message: function() {
+            return $scope.message;
+          }
+        }
+      });
+
+    };
+
+    // Marks a message as read, sends update request to server.
+    var markAsRead = function(message) {
+      $scope.newCount--;
+      messageService.update(message, {
+        read: true
+      });
     };
 
     // Marks the message as 'starred' for the user.
@@ -131,4 +144,4 @@ angular.module('tikrApp')
     };
     loadContent($state.current.url);
 
-  }]);
+  });
