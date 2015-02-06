@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
-var authTypes = ['github', 'linkedin'];
+var authTypes = ['github'];
 var github = require('octonode');
 
 var UserSchema = new Schema({

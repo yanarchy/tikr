@@ -16,7 +16,7 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.get('/profiles/:githubUsername', controller.getUserProfile);
 router.post('/profiles/:githubUsername', auth.isAuthenticated(), controller.postNewSkill);
-router.get('/profiles/:linkedinUsername', controller.getUserProfile);
-router.post('/profiles/:linkedinUsername', auth.isAuthenticated());
+// router.get('/profiles/:linkedinUsername', controller.getUserProfile);
+// router.post('/profiles/:linkedinUsername', auth.isAuthenticated());
 // , controller.postNewSkill
 module.exports = router;
