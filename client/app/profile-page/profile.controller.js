@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('ProfileCtrl', function($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User) {
+  .controller('ProfileCtrl', function($scope, $http, $rootScope, $modal, messageService, $stateParams, $location, Auth, User, $window) {
 
     $scope.languages = {};
     $scope.currentUsername = $stateParams.username;
@@ -158,6 +158,10 @@ angular.module('tikrApp')
       } else {
         return false;
       }
+    };
+
+    $scope.loginOauth = function(provider) {
+      $window.location.href = '/auth/' + provider;
     };
 
   });
