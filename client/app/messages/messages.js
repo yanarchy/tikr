@@ -22,14 +22,6 @@ angular.module('tikrApp')
       .state('messages.sent', {
         url: '/sent',
         templateUrl: 'app/messages/views/sent.html'
-      })
-      .state('messages.starred', {
-        url: '/starred',
-        templateUrl: 'app/messages/views/starred.html'
-      })
-      .state('messages.message', {
-        url: '/:id',
-        templateUrl: 'app/messages/views/message.html'
       });
 
   });

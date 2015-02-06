@@ -1,0 +1,41 @@
+  <div class="modal-header">
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-hidden="true">
+      &times;
+    </button>
+
+    <h4 class="modal-title">{{message.title}}</h4>
+    <p>From: <a ng-href="/profiles/{{message.from}}">{{message.from}}</a></p>
+  </div>
+
+  <div class="modal-body" ng-bind-html="message.content">
+    <h4>Body</h4>
+    <p>{{message.content}}</p>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    ng-click="delete()"
+    class="btn btn-default pull-left">
+    Delete
+  </button>
+
+  <button
+    type="button"
+    ng-click="close()"
+    class="btn btn-default"
+    data-dismiss="modal">
+    Close
+  </button>
+
+  <button
+    type="button"
+    ng-click="reply()"
+    class="btn btn-primary">
+    Reply
+  </button>
+</div>
