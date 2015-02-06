@@ -160,6 +160,7 @@ angular.module('tikrApp')
       }
     };
 
+    //checks if LinkedIn is connected through components/auth
     $scope.isLinkedIn = Auth.isLinkedIn;
 
     $scope.loginOauth = function(provider) {

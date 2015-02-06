@@ -2,7 +2,7 @@
 
 angular.module('tikrApp')
 	.controller('MainCtrl', function($scope, $http, $window, Auth) {
-		$scope.isLinkedIn = Auth.isLinkedIn;
+		$scope.isLoggedIn = Auth.isLoggedIn;
 
 		$scope.loginOauth = function(provider) {
 			$window.location.href = '/auth/' + provider;
