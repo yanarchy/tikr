@@ -15,7 +15,7 @@ angular.module('tikrApp')
         .then(function(user){
           User.search({
             skill: language,
-            username: $scope.TEST_USER || user.github.login,
+            username: user.github.login,
             pageNumber: pageNumber
           }, function(data) {
             $scope.searchStarted = true;
