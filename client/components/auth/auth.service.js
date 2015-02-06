@@ -112,6 +112,10 @@ angular.module('tikrApp')
         return currentUser.hasOwnProperty('role');
       },
 
+      isLinkedIn: function() {
+        return currentUser.hasOwnProperty('linkedin')
+      },
+
       /**
        * Waits for currentUser to resolve before checking if user is logged in
        */

@@ -160,6 +160,8 @@ angular.module('tikrApp')
       }
     };
 
+    $scope.isLinkedIn = Auth.isLinkedIn;
+
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };
