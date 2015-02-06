@@ -26,7 +26,9 @@ angular.module('tikrApp')
           controller: 'search',
           skill: null,
           username: null,
-          pageNumber: 1
+          pageNumber: 1,
+          locationToSearch: null,
+          userToSearch: null
         }
       }
 	  });

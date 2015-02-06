@@ -2,9 +2,16 @@
 
 var path = require('path');
 var _ = require('lodash');
+var local = {};
+try {
+  local = require('./../local.env.js');
+} catch(err) {
+  console.log(err);
+}
+
 
 function requiredProcessEnv(name) {
-  if (!process.env[name]) {
+  if(!process.env[name]) {
     throw new Error('You must set the ' + name + ' environment variable');
   }
   return process.env[name];
@@ -31,14 +38,14 @@ var all = {
 
   //github and linkedin
   github: {
-    clientID: process.env.GITHUB_ID || 'id',
-    clientSecret: process.env.GITHUB_SECRET || 'secret',
+    clientID: local.GITHUB_ID || process.env.GITHUB_ID || 'id',
+    clientSecret: local.GITHUB_SECRET || process.env.GITHUB_SECRET || 'secret',
     callbackURL: (process.env.GITHUB_DOMAIN || '') + '/auth/github/callback'
   },
 
   linkedin: {
-    consumerKey: process.env.LINKEDIN_API_KEY || 'id',
-    consumerSecret: process.env.LINKEDIN_SECRET_KEY || 'secret',
+    consumerKey: local.LINKEDIN_API_KEY || process.env.LINKEDIN_API_KEY || 'id',
+    consumerSecret: local.LINKEDIN_SECRET_KEY || process.env.LINKEDIN_SECRET_KEY || 'secret',
     callbackURL: (process.env.LINKEDIN_DOMAIN || '') + '/auth/linkedin/callback'
 
   },

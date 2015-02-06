@@ -16,13 +16,9 @@ exports.setup = function(User, config) {
         }
         if (!user) {
           user = new User({
-            name: profile.displayName,
-            username: profile.username,
-            role: 'user',
-            provider: 'linkedin',
             linkedin: profile._json
           });
-          user.save(function(err) {
+          user.update(function(err) {
             if (err) return done(err);
             console.log('hello');
             return done(err, user);

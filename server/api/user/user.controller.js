@@ -116,14 +116,41 @@ exports.getReposPromise = function(user, username) {
   });
 };
 
+exports.getAnyUserPromise = function(user, username) {
+  return new Promise(function(resolve, reject) {
+    var repoOptions = {
+      url: user.url + "?client_id=" + (process.env.GITHUB_ID || githubKeys.GITHUB_ID) + "&client_secret=" + (process.env.GITHUB_SECRET || githubKeys.GITHUB_SECRET),
+      headers: {
+        'User-Agent': username
+      }
+    };
+
+    request(repoOptions, function(error, response, body) {
+      if(!error) {
+        user['userInfo'] = JSON.parse(response.body);
+        resolve(user)
+      } else {
+        reject(error);
+      }
+    });
+  });
+};
+
 var changedUsers = [];
 var getUsersPromise = function(users, username) {
   var promises = users.items.map(function(user) {
     return exports.getReposPromise(user, username)
-      .then(function(newUser) {
-        return newUser;
+      .then(function(userPlusRepos) {
+        return exports.getAnyUserPromise(userPlusRepos, username)
+          .then(function(userPlusInfo) {
+            return userPlusInfo;
+          })
+          .catch(function(err) {
+            console.log(err);
+            return userPlusRepos;
+          });
       })
-      .catch(function(error) {
+      .catch(function(err) {
         console.log(err);
         return user;
       });
@@ -138,14 +165,36 @@ var getUsersPromise = function(users, username) {
  */
 exports.search = function(req, res, next) {
   var options = {
-    url: 'https://api.github.com/search/users?q=+language:' + encodeURIComponent(req.body.skill) + "&page=" + req.body.pageNumber + "&per_page=10",
     headers: {
       'User-Agent': req.body.username
     }
   };
 
-  request(options, function(error, response, body) {
+  //setup base search url
+  options.url = 'https://api.github.com/search/users?q=';
 
+  //if username provided, add it to api request
+  if(req.body.userToSearch) {
+    options.url += req.body.userToSearch;
+  }
+
+  //if language provided, add it to api request
+  if(req.body.skill) {
+    options.url += '+language:' + encodeURIComponent(req.body.skill);
+  }
+
+  //if location provided, add it to api request
+  if(req.body.locationToSearch) {
+    options.url += '+location:' + encodeURIComponent(req.body.locationToSearch);
+  }
+
+  //set page and number of entries to show per page
+  options.url += "&page=" + req.body.pageNumber + "&per_page=10";
+
+  console.log( options.url );
+
+  //make request to Github search api
+  request(options, function(error, response, body) {
     if(!error) {
       var users = JSON.parse(decodeURIComponent(response.body));
 
@@ -200,13 +249,13 @@ exports.getUserProfile = function(req, res, next) {
 
       // Method get user information
       exports.getReposPromise(user.github, user.github.login)
-      .then(function(newUser) {
-        user.github = newUser;
-        res.json(user);
-      })
-      .catch(function(error) {
-        console.log(err);
-      });
+        .then(function(newUser) {
+          user.github = newUser;
+          res.json(user);
+        })
+        .catch(function(error) {
+          console.log(err);
+        });
 
       //console.log("THISIS THE USER DATA ON THE SERVER", user);
     });
