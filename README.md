@@ -39,7 +39,6 @@ Browser window will open at localhost:9000 with the app.
 - Mongoose
 
 ## Development
-<img src='https://travis-ci.org/tikr/tikr.svg?branch=master'>
 
 ### Installing Dependencies
 
@@ -67,7 +66,6 @@ export LINKEDIN_SECRET_KEY=linkedin-secret-key
 export GITHUB_ID=github-id
 export GITHUB_SECRET=github-secret
 ```
-This is common practice to minimize the risk of leaking application keys.
 
 To check whether variables have been set, please use shell command 'echo':
 ```sh
@@ -75,8 +73,6 @@ echo $LINKEDIN_API_KEY
 echo $GITHUB_ID
 ```
 and so on.
-
-Please do not include a local.env.js file---it will interfere with the config/index.js file.
 
 ## Contributing
 

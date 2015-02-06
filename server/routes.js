@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.use(passport.session());
 
   // Insert routes below
+  app.use('/api/facets', require('./api/facets'));
   app.use('/api/skills', require('./api/skills'));
   app.use('/api/languages', require('./api/languages'));
   app.use('/api/users', require('./api/user'));

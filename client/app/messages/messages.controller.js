@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('tikrApp')
-  .controller('MessageCtrl', ['$scope', '$state', '$location', 'messageService', function($scope, $state, $location, messageService) {
+  .controller('MessageCtrl', function($scope, $state, $location, $modal, $log, messageService) {
     // Set $state on the scope to access it in the views.
     $scope.state = $state;
     $scope.location = $location;
+    $scope.search = $scope.search || {
+      'read': false
+    };
 
     // Fetches a messages list that belongs to the authenticated user.
     $scope.getInbox = function() {
@@ -35,14 +38,42 @@ angular.module('tikrApp')
       }
     };
 
-    // Fetches a specific message.
+    // Displays a specific message.
     $scope.show = function(message) {
-      if (!message.read) $scope.newCount--;
+      if (!message.read) markAsRead(message);
+      $scope.message = message;
+
+      var modalInstance = $modal.open({
+        templateUrl: 'app/messages/components/message.html',
+        controller: 'ModalInstanceCtrl',
+        size: 'large',
+        resolve: {
+          message: function() {
+            return $scope.message;
+          }
+        }
+      });
+    };
+
+    // Marks a message as read, sends update request to server.
+    var markAsRead = function(message) {
+      $scope.newCount--;
       messageService.update(message, {
         read: true
-      }).then(function(doc) {
-        $scope.message = doc;
-        message.read = true;
+      });
+    };
+
+    // Modal for sending messages.
+    $scope.sendMessageModal = function(messageTo) {
+      var modalInstance = $modal.open({
+        templateUrl: 'components/compose-modal/compose.modal.html',
+        controller: 'ComposeModalCtrl',
+        size: 'large',
+        resolve: {
+          message: function() {
+            return messageTo;
+          }
+        }
       });
     };
 
@@ -54,19 +85,6 @@ angular.module('tikrApp')
         starred: !starred
       }).then(function(doc) {
         message.starred = !message.starred;
-      });
-    };
-
-    // Creates a new private message to a user.
-    // Messages should be sent with the following properties:
-    // to (github login), from (string: github login), title (string)
-    $scope.create = function(newMessage) {
-      // TODO: Notify user that the message was sent or not.
-      messageService.create(newMessage).then(function(doc) {
-        $scope.messages.push(doc);
-        $state.transitionTo('messages.inbox');
-      }, function() {
-        $state.transitionTo('messages.compose');
       });
     };
 
@@ -129,4 +147,9 @@ angular.module('tikrApp')
     };
     loadContent($state.current.url);
 
-  }]);
+    // Check for new messages every 5 seconds.
+    setInterval(function() {
+      $scope.getInbox();
+    }, 5000);
+
+  });

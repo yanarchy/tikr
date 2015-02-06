@@ -6,6 +6,9 @@ angular.module('tikrApp')
     $scope.languages = {};
     $scope.currentUsername = $stateParams.username;
     $scope.showFormToAddSkills = false;
+
+    // TODO: Move server request logic to appropriate service in client/components/auth.
+    // Server requests should be processed in the auth or user service, not directly in these controllers.
     $scope.getUserProfile = function() {
       var githubUsername = $stateParams.username;
       var url = 'api/users/profiles/' + githubUsername;
@@ -41,9 +44,7 @@ angular.module('tikrApp')
     $scope.isLoggedInAsCurrentUser = function() {
       var currentUserPage = $stateParams.username;
       var loggedInUser = Auth.getCurrentUser();
-      //console.log(loggedInUser);
       if (loggedInUser.github && loggedInUser.github.login) {
-        //console.log("LOGGING LINE 51", loggedInUser.github.login, currentUserPage);
         if (loggedInUser.github.login === currentUserPage) {
           return true;
         }
@@ -55,6 +56,8 @@ angular.module('tikrApp')
       $scope.showFormToAddSkills = true;
     };
 
+    // TODO: Move server request logic to appropriate service in client/components/auth.
+    // Server requests should be processed in the auth or user service, not directly in these controllers.
     $scope.addASkill = function(formdata) {
       $scope.showFormToAddSkills = false;
       var newSkillName = $scope.skillname;
@@ -78,49 +81,17 @@ angular.module('tikrApp')
       }
     };
 
-    $scope.sendMessage = function(title, text, userID) {
-      var newMessage = {
-        userGithubID: userID,
-        title: title,
-        message: text
-      };
-
-      messageService.create(newMessage).then(function() {
-        console.log('sent message');
-      }, function() {
-        console.log('failed to send message');
-      });
-    };
-
-    $scope.sendMessageModal = function(user) {
-      var modalScope = $rootScope.$new();
-      modalScope.messageTitle = '';
-      modalScope.messageText = '';
-      var modalClass = 'modal-default';
-      modalScope.modal = {
-        dismissable: true,
-        title: 'Sending Message to: ' + user.name,
-        buttons: [{
-          classes: 'btn-danger',
-          text: 'Send',
-          click: function(e) {
-            $scope.sendMessage(modalScope.messageTitle, modalScope.messageText, user.github.id);
-            $scope.messageModal.close(e);
+    // Modal for sending messages.
+    $scope.sendMessageTo = function(user) {
+      var modalInstance = $modal.open({
+        templateUrl: 'components/compose-modal/compose.modal.html',
+        controller: 'ComposeModalCtrl',
+        size: 'large',
+        resolve: {
+          message: function() {
+            return user.github.login;
           }
-        }, {
-          classes: 'btn-default',
-          text: 'Cancel',
-          click: function(e) {
-            $scope.messageModal.dismiss(e);
-          }
-        }]
-      };
-
-      $scope.messageModal = $modal.open({
-        templateUrl: 'app/profile-page/messageDialog.html',
-        windowClass: modalClass,
-        scope: modalScope,
-        controller: 'ProfileCtrl'
+        }
       });
     };
 
