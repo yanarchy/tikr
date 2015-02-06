@@ -10,7 +10,7 @@
   <h3 class="modal-title">Compose New Message</h3>
 </div>
 
-<form name="newMessage" ng-submit="create(newMessage)" validate>
+<form name="newMessage" ng-submit="send(newMessage)" validate>
 
   <div class="modal-body">
     
@@ -24,9 +24,10 @@
       <input
         id="messageTo"
         type="text"
-        ng-model="$parent.messageTitle"
+        ng-model="newMessage.to"
         class="form-control"
-        placeholder="GitHub Username">
+        placeholder="GitHub Username"
+        required>
     </div><br>
     
     <div class="input-group" style="width:100%">
@@ -39,14 +40,15 @@
       <input
         id="messageSubject"
         type="text"
-        ng-model="$parent.messageSubject"
+        ng-model="newMessage.title"
         class="form-control"
-        placeholder="Message Subject">
+        placeholder="Message Subject"
+        required>
     </div><br>
     
     <div class="input-group" style="width:100%">
       <label 
-        for="messageContent" 
+        for="messageContent"
         class="input-group-addon"
         style="width:85px">
         <span class="pull-left">Message</span>
@@ -54,10 +56,11 @@
       <textarea
         id="messageContent"
         type="text"
-        ng-model="$parent.messageContent"
+        ng-model="newMessage.message"
         class="form-control"
         rows="10"
-        placeholder="Message Content">
+        placeholder="Message Content"
+        required>
       </textarea>
     </div>
 

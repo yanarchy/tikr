@@ -1,15 +1,5 @@
 <div class="list-group">
 
-<!-- TODO: Refactor sidebar to populate with ng-repeat (isActive not working).
-    <a
-      ng-repeat="item in sidebar"
-      ui-sref="{{item.sref}}"
-      class="ng-class: {active: isActive('{{item.link}}')}; list-group-item">
-      {{item.title}}
-      <span class="badge">{{item.badge}}</span>
-    </a>
- -->
-
   <a
     ui-sref="messages.inbox"
     class="ng-class: {active: isActive('/messages/inbox')}; list-group-item">
@@ -26,7 +16,8 @@
   </a>
 
   <a
-    ui-sref="messages.compose"
+    ng-href="#{{location.hash()}}"
+    ng-click="sendMessageModal()"
     class="ng-class: {active: isActive('/messages/compose')}; list-group-item">
     <i class="glyphicon glyphicon-envelope pad-right" aria-hidden="true"></i>
     Compose
