@@ -101,7 +101,6 @@ angular.module('tikrApp')
       // TODO: Assign each repo and its stargazer value to an array
       _.each($scope.userProfile.github.repos, function(val, key){
         // Need to associate a repo name to an integer
-        console.log(val.name);
         data.push([val.name, val.stargazers_count]);
       });
 
