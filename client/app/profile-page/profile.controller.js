@@ -108,14 +108,16 @@ angular.module('tikrApp')
       var chart = c3.generate({
         bindto: "#reposChart",
         data: {
+          // Dummy data
+          // TODO: Get stargazers from GitHub API
           columns: [
-            ['Repo1', 2],
-            ['Repo2', 1],
-            ['Repo3', 6],
-            ['Repo4', 3],
-            ['Repo5', 1],
-            ['Repo6', 1],
-            ['Repo7', 2],
+            ['FatalBadgers', 2],
+            ['soundTab', 1],
+            ['HexGL', 6],
+            ['tikr', 3],
+            ['web-api-auth-examples', 1],
+            ['Blog', 1],
+            ['GhostAzureSetup', 2],
             ['Repo8', 3],
             ['Repo9', 2],
             ['Repo10', 2],
