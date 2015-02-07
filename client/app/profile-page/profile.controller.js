@@ -98,7 +98,6 @@ angular.module('tikrApp')
 
     $scope.reposChart = function(){
       var data = [];
-      // TODO: Assign each repo and its stargazer value to an array
       _.each($scope.userProfile.github.repos, function(val, key){
         // Need to associate a repo name to an integer
         data.push([val.name, val.stargazers_count]);
@@ -109,8 +108,6 @@ angular.module('tikrApp')
       var chart = c3.generate({
         bindto: "#reposChart",
         data: {
-          // Dummy data
-          // TODO: Get stargazers from GitHub API
           columns: data,
           type: 'bar'
         },
