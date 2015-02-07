@@ -98,33 +98,29 @@ angular.module('tikrApp')
 
     $scope.reposChart = function(){
       var data = [];
-      // Assign each repo and its stargazer value to an array
-      // _.each($scope.repositories, function(val, key){
-      //   // Need to associate a repo name to an integer
-      //   data.push([key, val[1], 'test']);
-      // });
+      _.each($scope.userProfile.github.repos, function(val, key){
+        // Need to associate a repo name to an integer
+        data.push([val.name, val.stargazers_count]);
+      });
+
 
       // Generate graph
       var chart = c3.generate({
         bindto: "#reposChart",
         data: {
-          // Dummy data
-          // TODO: Get stargazers from GitHub API
-          columns: [
-            ['FatalBadgers', 2],
-            ['soundTab', 1],
-            ['HexGL', 6],
-            ['tikr', 3],
-            ['web-api-auth-examples', 1],
-            ['Blog', 1],
-            ['GhostAzureSetup', 2],
-            ['javascript_koans', 3],
-          ],
+          columns: data,
           type: 'bar'
         },
         bar: {
           width: {
             ratio: 0.95
+          }
+        },
+        axis: {
+          x: {
+            tick: {
+              values: []
+            }
           }
         }
       });
