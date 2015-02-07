@@ -118,9 +118,7 @@ angular.module('tikrApp')
             ['web-api-auth-examples', 1],
             ['Blog', 1],
             ['GhostAzureSetup', 2],
-            ['Repo8', 3],
-            ['Repo9', 2],
-            ['Repo10', 2],
+            ['javascript_koans', 3],
           ],
           type: 'bar'
         },
