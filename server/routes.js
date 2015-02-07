@@ -6,6 +6,8 @@
 
 var errors = require('./components/errors');
 var passport = require('passport');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 module.exports = function(app) {
 

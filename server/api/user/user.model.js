@@ -12,6 +12,8 @@ var UserSchema = new Schema({
     type: String,
     lowercase: true
   },
+  linkedinusername: String,
+  githubusername: String,
   role: {
     type: String,
     default: 'user'
