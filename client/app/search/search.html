@@ -7,40 +7,105 @@
     <!--facets-->
     <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" style="padding-top: 20px;">
       <span>
-        <div ng-repeat="(facet,object) in parsedSearchResults.facets" ng-if="parsedSearchResults.records.length">
-          <h5 style="font-weight: bold" ng-bind="object.label"></h5>
-          <ul>
-            <li ng-repeat="item in object.buckets">
-              <a href data-ng-click="doSearchByFilter(facet, item.value)" ng-show="item.value">
-                <input type="checkbox" ng-model="checked[item.value]">
-                <span ng-bind-html="item.value" class="facetText"></span>
-                ({{item.count | number}})
-              </a>
+
+        <div ng-if="searchType === 'userSearch'">
+          <ul class="left-facets">
+            <li>
+              <h5 style="font-weight: bold">Languages</h5>
+
+              <div style="margin-bottom: 20px; padding-left: 0px;" class="col-sm-4 col-md-4">
+
+                <!--Filter by language-->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1" ng-click="clearLanguageFilter()">Clear</span>
+                  <ui-select ng-model="language.selected"
+                             theme="bootstrap"
+                             reset-search-input="false"
+                             on-select="fetchUsers($item, username, location)">
+                    <ui-select-match placeholder="Filter by language...">{{$select.selected.value}}</ui-select-match>
+                    <ui-select-choices repeat="language.value as language in languages track by $index"
+                                       refresh="refreshTypeahead($select.search, 'languages')"
+                                       refresh-delay="0">
+                      <div ng-bind-html="language.value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+
+              </div>
+            </li>
+            <li>
+
+              <h5 style="font-weight: bold">Location</h5>
+
+              <div style="margin-bottom: 20px; padding-left: 0px;" class="col-sm-4 col-md-4">
+                <!--Filter by location-->
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1" ng-click="clearLocationFilter()">Clear</span>
+                  <ui-select ng-model="location.selected"
+                             theme="bootstrap"
+                             reset-search-input="false"
+                             on-select="fetchUsers(language, username, $item)">
+                    <ui-select-match placeholder="Filter by location...">{{$select.selected.value}}</ui-select-match>
+                    <ui-select-choices repeat="location.value as location in locations track by $index"
+                                       refresh="refreshTypeahead($select.search, 'locations')"
+                                       refresh-delay="0">
+                      <div ng-bind-html="location.value | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+
             </li>
           </ul>
         </div>
+
       </span>
     </div>
 
     <!--search results-->
     <div class="col-sm-8 col-md-8 col-md-offset-0 main">
 
-      <div style="margin-bottom: 20px;">
-        <ui-select ng-model="entry.selected"
-                   theme="bootstrap"
-                   reset-search-input="false"
-                   style="width: 300px;"
-                   on-select="fetchUsers($item)">
-          <ui-select-match placeholder="Search by language...">{{$select.selected}}</ui-select-match>
-          <ui-select-choices repeat="entry in languages track by $index"
-                             refresh="refreshTypeahead($select.search)"
-                             refresh-delay="0">
-            <div ng-bind-html="entry | highlight: $select.search"></div>
-          </ui-select-choices>
-        </ui-select>
+      <div style="margin-bottom: 20px;" class="col-sm-6 col-md-6">
+        <!--Filter by username-->
+        <div class="input-group" ng-if="searchType === 'userSearch'">
+          <span class="input-group-addon" id="basic-addon1" ng-click="clearUsernameFilter()">Clear</span>
+          <ui-select ng-model="username.selected"
+                     theme="bootstrap"
+                     reset-search-input="false"
+                     style="width: 400px;"
+                     on-select="fetchUsers(language, $item, location)">
+            <ui-select-match placeholder="Search by username...">{{$select.selected.value}}</ui-select-match>
+            <ui-select-choices repeat="username.value as username in usernames track by $index"
+                               refresh="refreshTypeahead($select.search, 'usernames')"
+                               refresh-delay="0">
+              <div ng-bind-html="username.value | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <!--Filter by organization-->
+        <div class="input-group" ng-if="searchType === 'repoSearch'">
+          <span class="input-group-addon" id="basic-addon1" ng-click="clearUsernameFilter()">Clear</span>
+          <ui-select ng-model="organization.selected"
+                     theme="bootstrap"
+                     reset-search-input="false"
+                     style="width: 400px;"
+                     on-select="fetchRepos($item, username, location)">
+            <ui-select-match placeholder="Search by organization name...">{{$select.selected.value}}</ui-select-match>
+            <ui-select-choices repeat="organization.value as organization in users track by $index"
+                               refresh="refreshTypeahead($select.search, 'usernames')"
+                               refresh-delay="0">
+              <div ng-bind-html="organization.value | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
       </div>
 
-      <div class="row-fluid" ng-if="(users.length <= 0 || data.errors.length > 0) && searchStarted">
+      <div class="col-sm-6 col-md-6">
+        <span class="col-sm-12 col-md-12"><input type="radio" ng-model="searchType" value="userSearch"> Search for Github users</span>
+        <span class="col-sm-12 col-md-12"><input type="radio" ng-model="searchType" value="repoSearch"> Search for Github organizations</span>
+      </div>
+
+      <div class="row-fluid col-sm-12 col-md-12" ng-if="(users.length <= 0 || data.errors.length > 0) && searchStarted">
         <span>
           Your search for<b> {{skill}} </b>did not match any documents...
             <br/><br/>
@@ -50,7 +115,7 @@
         </span>
       </div>
 
-      <div class="row-fluid main-section" style="min-height:500px" ng-if="users.length > 0 && searchStarted">
+      <div class="row-fluid main-section col-sm-12 col-md-12" style="min-height:500px" ng-if="users.length > 0 && searchStarted">
         <div ng-bind="(data.total_count ? (data.total_count | number) : 0) + ' results found'"></div>
 
         <div class="col-fluid" ng-repeat="user in users track by $index" ng-class-odd="'odd'" ng-class-even="'even'"
@@ -87,7 +152,7 @@
         </div>
 
         <!--pagination-->
-        <dir-pagination-controls on-page-change="fetchUsers(selected, newPageNumber)"
+        <dir-pagination-controls on-page-change="fetchUsers(language, username, location, newPageNumber)"
                                  template-url="components/pagination/dirPagination.tpl.html">
         </dir-pagination-controls>
 
