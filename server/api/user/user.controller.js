@@ -139,9 +139,9 @@ exports.getAnyUserPromise = function(user, username) {
 };
 
 var changedUsers = [];
-var getUsersPromise = function(users, username) {
+var getUsersPromise = function(users, username, numberOfRepos) {
   var promises = users.items.map(function(user) {
-    return exports.getReposPromise(user, username)
+    return exports.getReposPromise(user, username, numberOfRepos)
       .then(function(userPlusRepos) {
         return exports.getAnyUserPromise(userPlusRepos, username)
           .then(function(userPlusInfo) {
@@ -200,7 +200,7 @@ exports.search = function(req, res, next) {
     if(!error) {
       var users = JSON.parse(decodeURIComponent(response.body));
 
-      getUsersPromise(users, req.body.username)
+      getUsersPromise(users, req.body.username, 3)
         .then(function() {
           res.send([changedUsers]);
         })
