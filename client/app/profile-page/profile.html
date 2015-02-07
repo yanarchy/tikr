@@ -1,11 +1,5 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<!-- <header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>{{'@'+userProfile.github.login}}</h1>
-  </div>
-</header> -->
-
 <div class="container-fluid">
   
   <div class="row-fluid">
@@ -51,8 +45,8 @@
 
           <button ng-show="isLoggedInAsCurrentUser()" class="btn btn-default" ng-click="showAddSkillsForm()">Add a Skill</button>
           <!--TODO: fix this behavior when user is not logged in -->
-          <h1 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">You haven't added any skills yet</h1>
-          <h1 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">{{currentUsername}} hasn't added any skills yet</h1>
+          <h4 ng-show="!hasSkills() && isLoggedInAsCurrentUser" class="page-header">No skills yet</h4>
+          <h4 ng-show="!hasSkills() && !isLoggedInAsCurrentUser" class="page-header">No skills yet</h4>
 
           <form ng-show="showFormToAddSkills" class="form" name="form" ng-submit="addASkill(form)" novalidate>
             <div class="form-group">
@@ -119,7 +113,7 @@
         <ul class="list-group">
           <!-- Organise repo list by size -->
           <li class="list-group-item" ng-repeat="repo in userProfile.github.repos | orderBy:repos">
-            <a href="{{repo.git_url}}">{{repo.name}}</a>
+            <a href="{{repo.html_url}}">{{repo.name}}</a>
           </li>
         </ul>
       </div>
