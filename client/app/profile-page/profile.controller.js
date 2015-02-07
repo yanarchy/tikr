@@ -29,6 +29,7 @@ angular.module('tikrApp')
         });
 
         $scope.setupChart();
+        $scope.reposChart();
 
         return;
       }).
@@ -95,21 +96,55 @@ angular.module('tikrApp')
       });
     };
 
+    $scope.reposChart = function(){
+      var data = [];
+      // Assign each repo and its stargazer value to an array
+      // _.each($scope.repositories, function(val, key){
+      //   // Need to associate a repo name to an integer
+      //   data.push([key, val[1], 'test']);
+      // });
+
+      // Generate graph
+      var chart = c3.generate({
+        bindto: "#reposChart",
+        data: {
+          // Dummy data
+          // TODO: Get stargazers from GitHub API
+          columns: [
+            ['FatalBadgers', 2],
+            ['soundTab', 1],
+            ['HexGL', 6],
+            ['tikr', 3],
+            ['web-api-auth-examples', 1],
+            ['Blog', 1],
+            ['GhostAzureSetup', 2],
+            ['javascript_koans', 3],
+          ],
+          type: 'bar'
+        },
+        bar: {
+          width: {
+            ratio: 0.95
+          }
+        }
+      });
+    };
+
     $scope.setupChart = function() {
       var data = [];
       _.each($scope.languages, function(val, key) {
-        data.push([key, val[1], 'test']);
+        data.push([key, val[1]]);
       });
 
       var chart = c3.generate({
+        bindto: "#chart",
         data: {
-          // Example:
-          // columns: [
-          //   ['data1',40, 30, 200, 100, 400, 150, 250, 50, 100, 250,67,190,48,123,76,54,254],
-          //   ['x','Travel and Hospitality','Life Science and Pharma', 'Saas and Cloud', 'Hi-tech Manufacturing', 'Software', 'Business Services', 'Govt/Public Sector', 'Energy', 'Manufacturing', 'Healthcare','Media','Internet','Retail','Biotech','Automobile','Consumer Goods','Financial Services']
-          // ],
+
           columns: data,
-          type: 'donut',
+          type: 'pie',
+        },
+        legend: {
+                position: 'right'
         },
         pie: {
           width: 20,
@@ -117,6 +152,7 @@ angular.module('tikrApp')
           title: "Languages"
         }
       });
+
     };
 
     $scope.getUserProfile();
